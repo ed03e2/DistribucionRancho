@@ -1,0 +1,7 @@
+{
+  "name": "DistribucionRancho",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
