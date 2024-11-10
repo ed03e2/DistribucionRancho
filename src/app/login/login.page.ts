@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import {AuthService} from 'src/app/service/auth.service'
 
 @Component({
   selector: 'app-login',
@@ -18,12 +19,12 @@ export class LoginPage implements OnInit {
       {type:"minlength", message:"Tu contraseña no es correcta. Intenta nuevamente..."}
     ]
   }
-
-
-  validationFormUser!: FormGroup;
-
-
-  constructor(public formbuilder:FormBuilder) {
+   validationFormUser!: FormGroup;
+   
+   constructor(
+    public formbuilder:FormBuilder,
+    public authservice:AuthService
+  ) {
   }
 
   ngOnInit() {
@@ -39,8 +40,21 @@ export class LoginPage implements OnInit {
     })
 
   }
-  LoginUser(value: any) {
+  LoginUser(value:any) {
     console.log("Datos del usuario:", value);
+    try{
+      this.authservice.loginFireauth(value).then(resp=>{
+        console.log(resp);
+        console.log("inicio de sesion exitoso");
+        
+        
+      })
+    }catch(err){
+      console.log(err);
+      console.log("inicio de sesion no exitoso");
+
+      
+    }
     // Aquí puedes añadir la lógica para autenticar al usuario
   }
 
