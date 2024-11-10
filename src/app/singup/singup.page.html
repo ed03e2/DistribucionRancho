@@ -1,13 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>singup</ion-title>
+    <ion-title>Registrarte</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">singup</ion-title>
+      <ion-title size="large">Registrarte</ion-title>
     </ion-toolbar>
   </ion-header>
+  <span>Crea tu cuenta completando el siguiente formulario</span>
+  <ion-item>
+    <ion-label>Nombre</ion-label>
+    <ion-input type="text" name="name" required></ion-input>
+    </ion-item>
+    <ion-item>
+    <ion-label>Apellido</ion-label>
+    <ion-input type="text" name="secondName" required></ion-input>
+    </ion-item>
+    <ion-item>
+    <ion-label>Correo</ion-label>
+    <ion-input type="text" name="email" required></ion-input>
+    </ion-item>
+    <ion-item>
+    <ion-label>Numero</ion-label>
+      <ion-input type="text" name="phone" required></ion-input>
+      </ion-item>
+    <ion-item>
+    <ion-label>Contraseña</ion-label>
+    <ion-input type="password" name="password" placeholder="**************"></ion-input>
+    </ion-item>
+    <ion-button>Registrarte</ion-button>
+    <span>O inicia sesion con</span>
+    <ion-button>Facebook</ion-button>
+    <ion-button>Google</ion-button>
+    <span>Ya tienes una cuenta inicia sesion</span>
+    <ion-button>Inciio de sesion</ion-button>
 </ion-content>
