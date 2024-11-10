@@ -1,31 +1,55 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Incio de sesion</ion-title>
+    <ion-title>Inicio de sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Incio de sesion</ion-title>
+      <ion-title size="large">Inicio de sesión</ion-title>
     </ion-toolbar>
   </ion-header>
-  <span>Inicia sesion con tu correo y contraseña</span>
-  <ion-item>
-  <ion-label>Correo</ion-label>
-  <ion-input type="text" name="email" required></ion-input>
-  </ion-item>
-  <ion-item>
-  <ion-label>Contraseña</ion-label>
-  <ion-input type="password" name="password" placeholder="**************"></ion-input>
-  </ion-item>
-  <ion-button>¿Olvidaste la contraseña?</ion-button>
-  <ion-button>Inciar sesion</ion-button>
-  <span>O inicia sesion con</span>
-  <ion-button>Facebook</ion-button>
-  <ion-button>Google</ion-button>
-  <span>No tienes cuenta crea una</span>
-  <ion-button>Registrate</ion-button>
 
+  <span>Inicia sesión con tu correo y contraseña</span>
 
+  <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
+    <ion-item>
+      <ion-label>Correo </ion-label>
+      <ion-input type="text" name="email" required formControlName="email"></ion-input>
+    </ion-item>
+    
+    <!-- Mensaje de error para el campo 'email' -->
+    <div *ngIf="validationFormUser.get('email')?.invalid && (validationFormUser.get('email')?.dirty || validationFormUser.get('email')?.touched)">
+      <ng-container *ngFor="let validation of validationUserMessage.email">
+        <div class="error_message" *ngIf="validationFormUser.get('email')?.hasError(validation.type)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label>Contraseña</ion-label>
+      <ion-input type="password" name="password" formControlName="password" placeholder="**************"></ion-input>
+    </ion-item>
+    
+    <!-- Mensaje de error para el campo 'password' -->
+    <div *ngIf="validationFormUser.get('password')?.invalid && (validationFormUser.get('password')?.dirty || validationFormUser.get('password')?.touched)">
+      <ng-container *ngFor="let validation of validationUserMessage.password">
+        <div class="error_message" *ngIf="validationFormUser.get('password')?.hasError(validation.type)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-button>¿Olvidaste la contraseña?</ion-button>
+    <ion-button type="submit" [disabled]="!validationFormUser.valid">Iniciar sesión</ion-button>
+
+    <span>O inicia sesión con</span>
+    <ion-button>Facebook</ion-button>
+    <ion-button>Google</ion-button>
+
+    <span>¿No tienes cuenta? Crea una</span>
+    <ion-button>Regístrate</ion-button>
+  </form>
 </ion-content>

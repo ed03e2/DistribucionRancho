@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  validationUserMessage ={
+    email:[
+      {type:"required", message:"Por favor introduce tu correo electronico"},
+      {type:"pattern", message:"Tu correo no coincide con el registro. Intenta nuevamente..."}
+    ],
+    password:[
+      {type:"required", message:"Por favor introduce tu contraseña"},
+      {type:"minlength", message:"Tu contraseña no es correcta. Intenta nuevamente..."}
+    ]
+  }
+
+
+  validationFormUser!: FormGroup;
+
+
+  constructor(public formbuilder:FormBuilder) {
+  }
 
   ngOnInit() {
+    this.validationFormUser= this.formbuilder.group({
+      email: new FormControl ('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
+      ])),
+      password: new FormControl ('', Validators.compose([
+        Validators.required,
+        Validators.minLength(5)
+      ]))
+    })
+
+  }
+  LoginUser(value: any) {
+    console.log("Datos del usuario:", value);
+    // Aquí puedes añadir la lógica para autenticar al usuario
   }
 
 }
+
