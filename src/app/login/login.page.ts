@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {AuthService} from 'src/app/service/auth.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginPage implements OnInit {
    
    constructor(
     public formbuilder:FormBuilder,
-    public authservice:AuthService
+    public authservice:AuthService,
+    private router:Router
   ) {
   }
 
@@ -46,6 +48,7 @@ export class LoginPage implements OnInit {
       this.authservice.loginFireauth(value).then(resp=>{
         console.log(resp);
         console.log("inicio de sesion exitoso");
+        this.router.navigate(['tabs'])
         
         
       })

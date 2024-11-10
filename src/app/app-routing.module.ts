@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { authGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule), canActivate:[authGuard]
   },
   {
     path: 'singup',
@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'homelogin',
-    loadChildren: () => import('./homelogin/homelogin.module').then( m => m.HomeloginPageModule)
+    loadChildren: () => import('./homelogin/homelogin.module').then( m => m.HomeloginPageModule), canActivate:[authGuard]
   }
 ];
 @NgModule({
