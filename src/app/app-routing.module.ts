@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'homelogin',
     loadChildren: () => import('./homelogin/homelogin.module').then( m => m.HomeloginPageModule), canActivate:[authGuard]
+  },
+  {
+    path: 'rancho-detail',
+    loadChildren: () => import('./rancho-detail/rancho-detail.module').then( m => m.RanchoDetailPageModule)
   }
 ];
 @NgModule({

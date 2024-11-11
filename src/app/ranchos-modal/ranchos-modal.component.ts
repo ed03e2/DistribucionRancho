@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
@@ -21,11 +21,14 @@ export class RanchosModalComponent {
   constructor(
     private modalController: ModalController,
     private firestore: AngularFirestore,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private alertController: AlertController  // Importamos el AlertController
   ) {}
 
   dismissModal() {
-    this.modalController.dismiss();
+    this.modalController.dismiss({
+      
+    });
   }
 
   onFileSelected(event: Event) {
@@ -57,10 +60,29 @@ export class RanchosModalComponent {
   private saveRancho() {
     this.firestore.collection('ranchos').add(this.rancho)
       .then(() => {
-        this.dismissModal();
+        this.dismissModal(); // Cierra la modal primero
+        this.showSuccessAlert();  // Luego muestra la alerta
       })
       .catch((error: any) => {
         console.error("Error saving ranch:", error);
       });
+  }
+
+  // Función para mostrar la alerta
+  async showSuccessAlert() {
+    const alert = await this.alertController.create({
+      header: 'Éxito',
+      message: 'Rancho registrado correctamente.',
+      buttons: [{
+        text: 'OK',
+       handler: () => {
+        console.log('Cerrando modal...');
+        this.dismissModal();
+      }
+      
+      }]
+    });
+
+    await alert.present();
   }
 }
