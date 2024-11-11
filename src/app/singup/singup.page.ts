@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { AuthService } from '../service/auth.service';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-singup',
   templateUrl: './singup.page.html',
@@ -22,11 +24,14 @@ export class SingupPage implements OnInit {
  ]
 }
 
-ValidationFormUser!:FormGroup
+ValidationFormUser!:FormGroup;
+loading:any;
   constructor(
     private nav:NavController,
     private formBuilder:FormBuilder,
-    private authService:AuthService
+    private authService:AuthService,
+    private alertCtrl:AlertController,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -54,6 +59,7 @@ ValidationFormUser!:FormGroup
     this.nav.navigateForward(['login'])
   }
   registerUser(value:any){
+    this.showalert();
     try{
       this.authService.userRegistration(value).then(response=>{
         console.log(response);
@@ -63,6 +69,8 @@ ValidationFormUser!:FormGroup
             email: value.email,
             phoneNumber: value.phone
           });
+          this.loading.demiss();
+          this.router.navigate(['login']);
         }
 
       })
@@ -70,8 +78,19 @@ ValidationFormUser!:FormGroup
       console.log(erro);
 
     }
+
     
   
+  }
+  async errorLoading(){
+      
+  }
+  
+  async showalert(){
+    var load = await this.alertCtrl.create({
+      message:"Cargando....por favor espere"
+    })
+    load.present();
   }
 
 }
