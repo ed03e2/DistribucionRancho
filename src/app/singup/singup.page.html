@@ -10,11 +10,15 @@
       <ion-title size="large">Registrarte</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <span>Crea tu cuenta completando el siguiente formulario</span>
-  <form [formGroup]="ValidationFormUser" (click)="registerUser(ValidationFormUser.value)">
-  <ion-item>
-    <ion-label>Nombre</ion-label>
-    <ion-input type="text" name="name" required formControlName="name"></ion-input>
+
+  <!-- Cambié el evento a ngSubmit -->
+  <form [formGroup]="ValidationFormUser" (ngSubmit)="registerUser(ValidationFormUser.value)">
+
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
     <div>
       <ng-container *ngFor="let validation of validationMessage.name">
@@ -23,9 +27,10 @@
         </div>
       </ng-container>
     </div>
+
     <ion-item>
-    <ion-label>Apellido</ion-label>
-    <ion-input type="text" name="secondName" required formControlName="secondName"></ion-input>
+      <ion-label>Apellido</ion-label>
+      <ion-input type="text" formControlName="secondName"></ion-input>
     </ion-item>
     <div>
       <ng-container *ngFor="let validation of validationMessage.secondName">
@@ -34,9 +39,10 @@
         </div>
       </ng-container>
     </div>
+
     <ion-item>
-    <ion-label>Correo electronico</ion-label>
-    <ion-input type="text" name="email" required placeholder="correo@correo.com" formControlName="email"></ion-input>
+      <ion-label>Correo electrónico</ion-label>
+      <ion-input type="email" placeholder="correo@correo.com" formControlName="email"></ion-input>
     </ion-item>
     <div>
       <ng-container *ngFor="let validation of validationMessage.email">
@@ -45,9 +51,10 @@
         </div>
       </ng-container>
     </div>
+
     <ion-item>
-    <ion-label>Telefono</ion-label>
-    <ion-input type="text" name="phone" required placeholder="000-000-00-00" formControlName="phone"></ion-input>
+      <ion-label>Teléfono</ion-label>
+      <ion-input type="text" placeholder="000-000-00-00" formControlName="phone"></ion-input>
     </ion-item>
     <div>
       <ng-container *ngFor="let validation of validationMessage.phone">
@@ -56,9 +63,10 @@
         </div>
       </ng-container>
     </div>
+
     <ion-item>
-    <ion-label>Contraseña</ion-label>
-    <ion-input type="password" name="password" placeholder="**************" formControlName="password"></ion-input>
+      <ion-label>Contraseña</ion-label>
+      <ion-input type="password" placeholder="**************" formControlName="password"></ion-input>
     </ion-item>
     <div>
       <ng-container *ngFor="let validation of validationMessage.password">
@@ -67,11 +75,14 @@
         </div>
       </ng-container>
     </div>
+
     <ion-button type="submit" [disabled]="!ValidationFormUser.valid">Registrarte</ion-button>
-    </form>
-    <span>O inicia sesion con</span>
-    <ion-button>Facebook</ion-button>
-    <ion-button>Google</ion-button>
-    <span>Ya tienes una cuenta inicia sesion</span>
-    <ion-button (click)="GoTologin()">Inicio de sesion</ion-button>
+  </form>
+
+  <span>O inicia sesión con</span>
+  <ion-button>Facebook</ion-button>
+  <ion-button>Google</ion-button>
+
+  <span>¿Ya tienes una cuenta? Inicia sesión</span>
+  <ion-button (click)="GoTologin()">Inicio de sesión</ion-button>
 </ion-content>
