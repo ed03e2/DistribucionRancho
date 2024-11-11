@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { SingupPageRoutingModule } from './singup-routing.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { SingupPage } from './singup.page';
 
 @NgModule({
@@ -13,7 +13,8 @@ import { SingupPage } from './singup.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SingupPageRoutingModule
+    SingupPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [SingupPage]
 })

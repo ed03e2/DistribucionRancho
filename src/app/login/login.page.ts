@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {AuthService} from 'src/app/service/auth.service'
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginPage implements OnInit {
    constructor(
     public formbuilder:FormBuilder,
     public authservice:AuthService,
-    private router:Router
+    private router:Router,
+    private nav: NavController
   ) {
   }
 
@@ -58,7 +60,12 @@ export class LoginPage implements OnInit {
 
       
     }
-    // Aquí puedes añadir la lógica para autenticar al usuario
+  }
+  GoToResetPassword(){
+    this.nav.navigateForward(['forgotpassword'])
+  }
+  GoToResetSingUp(){
+    this.nav.navigateForward(['singup'])
   }
 
 }

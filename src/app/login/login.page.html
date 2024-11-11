@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+ <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Inicio de sesión</ion-title>
   </ion-toolbar>
@@ -42,14 +42,14 @@
       </ng-container>
     </div>
 
-    <ion-button>¿Olvidaste la contraseña?</ion-button>
-    <ion-button type="submit" [disabled]="!validationFormUser.valid">Iniciar sesión</ion-button>
+    <ion-button (click)="GoToResetPassword()">¿Olvidaste la contraseña?</ion-button>
+    <ion-button type="submit" [disabled]="!validationFormUser.valid" >Iniciar sesión</ion-button>
 
     <span>O inicia sesión con</span>
     <ion-button>Facebook</ion-button>
     <ion-button>Google</ion-button>
 
     <span>¿No tienes cuenta? Crea una</span>
-    <ion-button>Regístrate</ion-button>
+    <ion-button (click)="GoToResetSingUp()">Regístrate</ion-button>
   </form>
 </ion-content>
