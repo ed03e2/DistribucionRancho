@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToastController, NavController } from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Router } from '@angular/router'; // Importar Router
 
 @Component({
   selector: 'app-tab2',
@@ -7,12 +9,20 @@ import { ActionSheetController, AlertController, ToastController } from '@ionic/
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  profilePicture: string | undefined;
 
   constructor(
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router // Inyectar Router
   ) {}
+
+  ngOnInit() {
+    // Cargar la imagen de perfil desde localStorage si existe
+    const savedImage = localStorage.getItem('profilePicture');
+    this.profilePicture = savedImage ? savedImage : 'assets/profile-picture.jpg';
+  }
 
   async changeProfilePicture() {
     const actionSheet = await this.actionSheetController.create({
@@ -22,14 +32,14 @@ export class Tab2Page {
           text: 'Tomar Foto',
           icon: 'camera-outline',
           handler: () => {
-            console.log('Tomar Foto');
+            this.selectImage(CameraSource.Camera);
           },
         },
         {
           text: 'Seleccionar de la Galería',
           icon: 'image-outline',
           handler: () => {
-            console.log('Seleccionar de la Galería');
+            this.selectImage(CameraSource.Photos);
           },
         },
         {
@@ -41,6 +51,18 @@ export class Tab2Page {
     });
 
     await actionSheet.present();
+  }
+
+  async selectImage(source: CameraSource) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      resultType: CameraResultType.DataUrl,
+      source: source,
+    });
+
+    // Guardar la imagen en localStorage y actualizar la variable de imagen de perfil
+    this.profilePicture = image.dataUrl!;
+    localStorage.setItem('profilePicture', this.profilePicture);
   }
 
   async changePassword() {
@@ -86,5 +108,14 @@ export class Tab2Page {
       color: 'danger'
     });
     toast.present();
+  }
+
+  // Función de logout
+  logout() {
+    // Eliminar información de sesión del almacenamiento local o cualquier otro almacenamiento
+    localStorage.removeItem('profilePicture');
+    
+    // Redirigir a la pantalla de inicio de sesión (HomeLogin)
+    this.router.navigate(['/login']);
   }
 }

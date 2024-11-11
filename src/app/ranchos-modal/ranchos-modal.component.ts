@@ -15,8 +15,7 @@ export class RanchosModalComponent {
     psg: '',
     descripcion: '',
     imagenUrl: '',
-    codeInscription: ''
-    
+    codigoVerificacion: ''  // Nuevo campo para el código de verificación
   };
   selectedFile: File | null = null;
 
@@ -24,13 +23,11 @@ export class RanchosModalComponent {
     private modalController: ModalController,
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
-    private alertController: AlertController  // Importamos el AlertController
+    private alertController: AlertController
   ) {}
 
   dismissModal() {
-    this.modalController.dismiss({
-      
-    });
+    this.modalController.dismiss();
   }
 
   onFileSelected(event: Event) {
@@ -41,6 +38,12 @@ export class RanchosModalComponent {
   }
 
   async onSubmit() {
+    if (!this.rancho.codigoVerificacion) {
+      // Si el código de verificación no está presente, muestra un mensaje de alerta
+      this.showErrorAlert('Por favor, ingrese el código de verificación.');
+      return;
+    }
+
     if (this.selectedFile) {
       const filePath = `ranchos/${new Date().getTime()}_${this.selectedFile.name}`;
       const fileRef = this.storage.ref(filePath);
@@ -70,23 +73,30 @@ export class RanchosModalComponent {
       });
   }
 
-  // Función para mostrar la alerta
+  // Función para mostrar la alerta de éxito
   async showSuccessAlert() {
     const alert = await this.alertController.create({
       header: 'Éxito',
       message: 'Rancho registrado correctamente.',
       buttons: [{
         text: 'OK',
-       handler: () => {
-        console.log('Cerrando modal...');
-        this.dismissModal();
-      }
-      
+        handler: () => {
+          this.dismissModal();
+        }
       }]
     });
 
     await alert.present();
   }
 
-  
+  // Función para mostrar alerta de error
+  async showErrorAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 }

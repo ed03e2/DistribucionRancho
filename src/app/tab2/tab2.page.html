@@ -16,25 +16,28 @@
       <ion-card-content>
         <div class="profile-header">
           <div class="avatar-container">
+            <!-- Centered profile image -->
             <ion-avatar class="profile-avatar">
-              <img src="assets/profile-picture.jpg" alt="Foto de perfil">
+              <img [src]="profilePicture" alt="Foto de perfil">
             </ion-avatar>
 
+            <!-- Button to change profile picture -->
             <ion-button fill="clear" class="avatar-button" (click)="changeProfilePicture()">
               <ion-icon name="camera-outline"></ion-icon>
             </ion-button>
           </div>
+
+          <!-- Profile information -->
           <div class="profile-info">
             <h2 class="profile-name">Nombre de Usuario</h2>
             <p class="profile-email">usuarioejemplo.com</p>
-            <p class="profile-tel">Telefono</p>
+            <p class="profile-tel">Teléfono</p>
           </div>
         </div>
-
-        <ion-button expand="block" class="small-button" color="primary" (click)="changePassword()">
-          Cambiar Contraseña
-        </ion-button>
       </ion-card-content>
     </ion-card>
+
+    <!-- Logout Button -->
+    <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
   </div>
 </ion-content>
