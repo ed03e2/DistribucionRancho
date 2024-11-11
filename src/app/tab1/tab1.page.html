@@ -20,7 +20,7 @@
   </ion-fab>
 
   <div class="rancho-list">
-    <ion-card *ngFor="let rancho of ranchos" class="rancho-card" (click)="goToRanchoDetail(rancho.nombre)">
+    <ion-card *ngFor="let rancho of ranchos" class="rancho-card" (click)="goToRanchoDetail(rancho.nombre, rancho.descripcion)">
       <img [src]="rancho.imagenUrl" alt="{{ rancho.nombre }}" class="rancho-image" />
       <ion-card-header>
         <ion-card-title>{{ rancho.nombre }}</ion-card-title>

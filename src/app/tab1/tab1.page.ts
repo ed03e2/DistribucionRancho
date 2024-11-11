@@ -30,13 +30,19 @@ export class Tab1Page implements OnInit {
     return await modal.present();
   }
 
-  goToRanchoDetail(nombre: string){
-    this.router.navigate(['/rancho-detail'], {queryParams: {nombre:nombre}})
-  }
-
+  goToRanchoDetail(nombre: string, descripcion: string) {
+    this.router.navigate(['/rancho-detail'], {
+      queryParams: { 
+        nombre: nombre,
+        descripcion: descripcion 
+      }
+    });
+}
   async loadRanchos() {
     this.firestore.collection('ranchos').valueChanges().subscribe((data: any[]) => {
       this.ranchos = data;
     });
   }
+
+  
 }
