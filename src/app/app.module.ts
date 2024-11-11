@@ -12,8 +12,9 @@ import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
+import { ProductsModalComponent } from './products-modal/products-modal.component';
 @NgModule({
-  declarations: [AppComponent, RanchosModalComponent],
+  declarations: [AppComponent, RanchosModalComponent, ProductsModalComponent],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 

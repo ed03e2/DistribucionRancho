@@ -14,7 +14,9 @@ export class RanchosModalComponent {
     nombre: '',
     psg: '',
     descripcion: '',
-    imagenUrl: ''
+    imagenUrl: '',
+    codeInscription: ''
+    
   };
   selectedFile: File | null = null;
 
@@ -85,4 +87,6 @@ export class RanchosModalComponent {
 
     await alert.present();
   }
+
+  
 }
