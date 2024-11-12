@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {AuthService} from 'src/app/service/auth.service'
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-login',
@@ -22,12 +23,12 @@ export class LoginPage implements OnInit {
     ]
   }
    validationFormUser!: FormGroup;
-   
    constructor(
     public formbuilder:FormBuilder,
     public authservice:AuthService,
     private router:Router,
-    private nav: NavController
+    private nav: NavController,
+    private firestore: AngularFirestore
   ) {
   }
 
@@ -50,7 +51,24 @@ export class LoginPage implements OnInit {
       this.authservice.loginFireauth(value).then(resp=>{
         console.log(resp);
         console.log("inicio de sesion exitoso");
-        this.router.navigate(['tabs'])
+        //this.router.navigate(['tabs'])
+        if(resp.user){
+          this.authservice.setUser({
+            username: resp.user.diplayName,
+            uid: resp.user.uid
+          })
+          
+          const userProfile = this.firestore.collection('profile').doc(resp.user.uid);
+
+          userProfile.get().subscribe(result =>{
+            if(result.exists){
+              this.nav.navigateForward(['tabs']);
+            }else{
+              this.firestore.doc(`profile/${this.authservice.getUserUid()}`)
+            }
+          })
+
+        }
         
         
       })
