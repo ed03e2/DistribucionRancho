@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
       this.authservice.loginFireauth(value).then(resp=>{
         console.log(resp);
         console.log("inicio de sesion exitoso");
-        //this.router.navigate(['tabs'])
+        this.router.navigate(['tabs'])
         if(resp.user){
           this.authservice.setUser({
             username: resp.user.diplayName,

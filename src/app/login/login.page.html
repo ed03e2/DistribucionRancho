@@ -43,14 +43,15 @@
       </ng-container>
     </div>
 
-    <ion-button (click)="GoToResetPassword()">¿Olvidaste la contraseña?</ion-button>
+    <a [routerLink]="['/forgotpassword']">Olvidaste tu contraseña</a>
     <ion-button type="submit" [disabled]="!validationFormUser.valid" >Iniciar sesión</ion-button>
 
     <span>O inicia sesión con</span>
     <ion-button>Facebook</ion-button>
     <ion-button>Google</ion-button>
 
-    <span>¿No tienes cuenta? Crea una</span>
-    <ion-button (click)="GoToResetSingUp()">Regístrate</ion-button>
+    <span>¿No tienes cuenta? Crea una en</span>
+    <a [routerLink]="['/singup']">Registrarse</a>
+   <span>¿No recuerdas el correo electronico?<a [routerLink]="['/login-phone']">Inicia sesion con tu telefono registrado</a></span>
   </form>
 </ion-content>
