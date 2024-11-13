@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
-
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat';
 export interface User{
   username: string;
   uid: string;
@@ -11,9 +11,11 @@ export interface User{
 })
 export class AuthService {
   private user!:User;
+  recaptchaVerifier: any;
 
   constructor(
-    public auth: AngularFireAuth
+    public auth: AngularFireAuth,
+    private firestore:AngularFirestore
   ) { }
   
   loginFireauth(value: any){
@@ -34,10 +36,20 @@ export class AuthService {
   userRegistration(value:any){
     return new Promise<any> ((resolve, reject)=>{
       this.auth.createUserWithEmailAndPassword(value.email, value.password).then(
-        (res: any) => resolve(res),
+       (res: any) => {
+        const userId = res.user.uid;
+        this.firestore.collection('users').doc(userId).set({
+          name: value.name,
+          secondName: value.secondName,
+          email: value.email,
+          phone: value.phone // Guardamos el número de teléfono
+        }).then(()=> {
+          resolve(res)
+        }).catch(error => reject(error));
+       },
         (error: any) => reject(error)
-      )
-    })
+      );
+    });
   }
 
   resetPassword(email: string){
@@ -49,15 +61,7 @@ export class AuthService {
     });
   }
 //Prueba de autenticacion con el telefono movil (En desarrollo)
- loginPhoneauth(phoneNumber: string, appVerifier: firebase.auth.RecaptchaVerifier){
-   return new Promise<any> ((resolve, reject)=>{
-     this.auth.signInWithPhoneNumber(phoneNumber, appVerifier).then(
-      (confirmationResult) => {
-      resolve(confirmationResult);
-    },
-    (error: any) => reject(error)
-      
-     )
-   })
-  }
+loginPhoneauth(phoneNumber: string, appVerifier: firebase.auth.RecaptchaVerifier) {
+  return this.auth.signInWithPhoneNumber(phoneNumber, appVerifier);
+}
 }

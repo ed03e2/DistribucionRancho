@@ -1,13 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>loginPhone</ion-title>
+    <ion-title>Login con Teléfono</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">loginPhone</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-label>Teléfono</ion-label>
+    <ion-input [(ngModel)]="phoneNumber" placeholder="+123456789"></ion-input>
+  </ion-item>
+  
+  <ion-button (click)="sendVerificationCode()">Enviar Código</ion-button>
+
+  <ion-item>
+    <ion-label>Verificación</ion-label>
+    <ion-input [(ngModel)]="verificationCode" placeholder="Código de Verificación"></ion-input>
+  </ion-item>
+  
+  <ion-button (click)="verifyCode()">Verificar Código</ion-button>
+
+  <!-- Contenedor para ReCAPTCHA -->
+  <div id="recaptcha-container"></div>
 </ion-content>
