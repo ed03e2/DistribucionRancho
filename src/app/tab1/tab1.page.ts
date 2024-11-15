@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, LoadingController } from '@ionic/angular';
 import { RanchosModalComponent } from '../ranchos-modal/ranchos-modal.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
@@ -16,11 +16,37 @@ export class Tab1Page implements OnInit {
     private modalController: ModalController,
     private firestore: AngularFirestore,
     private router: Router,
-    private alertController: AlertController // Importamos el AlertController
+    private alertController: AlertController, 
+    private loadingController: LoadingController 
   ) {}
 
   ngOnInit() {
-    this.loadRanchos(); // Cargar ranchos al iniciar la página
+    this.loadRanchos(); 
+  }
+
+  async showLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+      spinner: 'circles'
+    });
+    await loading.present();
+    return loading;
+  }
+
+  async loadRanchos() {
+    const loading = await this.showLoading(); // Mostrar el loading card
+
+    // Cargar ranchos desde Firestore
+    this.firestore.collection('ranchos').valueChanges().subscribe(
+      (data: any[]) => {
+        this.ranchos = data; // Actualizar ranchos solo después de completar la carga
+        loading.dismiss(); // Ocultar el loading card
+      },
+      error => {
+        console.error("Error al cargar los ranchos:", error);
+        loading.dismiss(); // Ocultar el loading card en caso de error
+      }
+    );
   }
 
   async openModal() {
@@ -29,14 +55,26 @@ export class Tab1Page implements OnInit {
     });
 
     modal.onDidDismiss().then(() => {
-      this.loadRanchos(); // Recargar ranchos después de cerrar el modal
+      this.loadRanchos(); 
     });
 
     return await modal.present();
   }
 
-  // Modificamos la función para pedir el código de verificación
-  async goToRanchoDetail(nombre: string, descripcion: string) {
+  async goToRanchoDetail(nombre: string, descripcion: string, psg: string) {
+    const inscrito = localStorage.getItem(`rancho_${nombre}`);
+  
+    if (inscrito) {
+      this.router.navigate(['/rancho-detail'], {
+        queryParams: { 
+          nombre: nombre,
+          descripcion: descripcion,
+          psg: psg
+        }
+      });
+      return;
+    }
+  
     const alert = await this.alertController.create({
       header: 'Código de Verificación',
       message: 'Por favor ingrese el código de verificación para acceder a los detalles del rancho.',
@@ -57,21 +95,29 @@ export class Tab1Page implements OnInit {
         },
         {
           text: 'Aceptar',
-          handler: (data) => {
+          handler: async (data) => {
             const codigoIngresado = data.codigoVerificacion;
-            console.log('Código ingresado: ', codigoIngresado); // Depuración
   
-            // Asegúrate de que el código guardado sea exactamente '1234'
-            if (codigoIngresado === '1234') {
-              console.log('Código correcto');
-              this.router.navigate(['/rancho-detail'], {
-                queryParams: { 
-                  nombre: nombre,
-                  descripcion: descripcion 
-                }
-              });
+            const snapshot = await this.firestore.collection('ranchos', ref =>
+              ref.where('nombre', '==', nombre)
+            ).get().toPromise();
+  
+            if (snapshot && !snapshot.empty) {
+              const ranchoData = snapshot.docs[0].data() as { codigoVerificacion: string };
+  
+              if (codigoIngresado === ranchoData.codigoVerificacion) {
+                localStorage.setItem(`rancho_${nombre}`, 'inscrito');
+  
+                this.router.navigate(['/rancho-detail'], {
+                  queryParams: { 
+                    nombre: nombre,
+                    descripcion: descripcion 
+                  }
+                });
+              } else {
+                this.showErrorAlert();
+              }
             } else {
-              console.log('Código incorrecto');
               this.showErrorAlert();
             }
           }
@@ -81,15 +127,7 @@ export class Tab1Page implements OnInit {
   
     await alert.present();
   }
-  
 
-  async loadRanchos() {
-    this.firestore.collection('ranchos').valueChanges().subscribe((data: any[]) => {
-      this.ranchos = data;
-    });
-  }
-
-  // Función para mostrar alerta de error cuando el código de verificación es incorrecto
   async showErrorAlert() {
     const alert = await this.alertController.create({
       header: 'Error',

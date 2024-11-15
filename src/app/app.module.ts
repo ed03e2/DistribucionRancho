@@ -13,8 +13,9 @@ import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { ProductsModalComponent } from './products-modal/products-modal.component';
+import { EditRanchoModalComponent } from './edit-rancho-modal/edit-rancho-modal.component';
 @NgModule({
-  declarations: [AppComponent, RanchosModalComponent, ProductsModalComponent],
+  declarations: [AppComponent, RanchosModalComponent, ProductsModalComponent, EditRanchoModalComponent],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 

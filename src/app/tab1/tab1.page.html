@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Rancherias</ion-title>
+      <ion-title size="large">Rancherias</ion-title>  
     </ion-toolbar>
   </ion-header>
 
@@ -20,7 +20,7 @@
   </ion-fab>
 
   <div class="rancho-list">
-    <ion-card *ngFor="let rancho of ranchos" class="rancho-card" (click)="goToRanchoDetail(rancho.nombre, rancho.descripcion)">
+    <ion-card *ngFor="let rancho of ranchos" class="rancho-card" (click)="goToRanchoDetail(rancho.nombre, rancho.descripcion, rancho.psg)">
       <img [src]="rancho.imagenUrl" alt="{{ rancho.nombre }}" class="rancho-image" />
       <ion-card-header>
         <ion-card-title>{{ rancho.nombre }}</ion-card-title>

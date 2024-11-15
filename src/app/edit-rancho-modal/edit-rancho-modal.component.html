@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Rancho</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Nombre del Rancho:</ion-label>
+    <ion-input [(ngModel)]="rancho.nombre" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">PSG:</ion-label>
+    <ion-input [(ngModel)]="rancho.psg" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Descripción:</ion-label>
+    <ion-input [(ngModel)]="rancho.descripcion" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Imagen del Rancho:</ion-label>
+    <ion-input type="file" (change)="onFileSelected($event)" accept="image/*"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" color="primary" (click)="saveChanges()">
+    Guardar Cambios
+  </ion-button>
+</ion-content>

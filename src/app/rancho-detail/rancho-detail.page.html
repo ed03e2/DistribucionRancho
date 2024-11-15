@@ -32,7 +32,7 @@
     <ion-fab-button (click)="openUser()" color="success" data-label="users">
       <ion-icon name="person-outline"></ion-icon>
       </ion-fab-button>
-    <ion-fab-button (click)="openModal()">
+    <ion-fab-button>
       <ion-icon name="add-circle-outline"></ion-icon>
       </ion-fab-button>
 
@@ -40,8 +40,13 @@
 
 </ion-fab>
 
-<ion-button size="default" shape="round" color="success"><ion-icon name="create-outline"></ion-icon>edit</ion-button>
-<ion-button shape="round" color="danger"><ion-icon name="trash-outline"></ion-icon>Delete</ion-button>
+<ion-button size="default" shape="round" color="success" (click)="openEditModal()">
+  <ion-icon name="create-outline"></ion-icon> Editar
+</ion-button>
+
+<ion-button shape="round" color="danger" (click)="deleteRancho()">
+  <ion-icon name="trash-outline"></ion-icon> Delete
+</ion-button>
 
 
 
