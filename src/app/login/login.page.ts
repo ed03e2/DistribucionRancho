@@ -51,12 +51,13 @@ export class LoginPage implements OnInit {
       this.authservice.loginFireauth(value).then(resp=>{
         console.log(resp);
         console.log("inicio de sesion exitoso");
-        this.router.navigate(['tabs'])
+        //this.router.navigate(['tabs'])
+        this.authservice.setUser({
+          username: resp.user.diplayName,
+          uid: resp.user.uid
+        })
         if(resp.user){
-          this.authservice.setUser({
-            username: resp.user.diplayName,
-            uid: resp.user.uid
-          })
+
           
           const userProfile = this.firestore.collection('profile').doc(resp.user.uid);
 
@@ -64,7 +65,10 @@ export class LoginPage implements OnInit {
             if(result.exists){
               this.nav.navigateForward(['tabs']);
             }else{
-              this.firestore.doc(`profile/${this.authservice.getUserUid()}`)
+              this.firestore.doc(`profile/${this.authservice.getUserUid()}`).set({
+                name:resp.user.displayName,
+                email: resp.user.email
+              })
             }
           })
 
