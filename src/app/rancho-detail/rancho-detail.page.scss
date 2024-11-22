@@ -1,65 +1,62 @@
 /* Estilo para el h2 */
 h2 {
-  text-align: center;  /* Centra el título */
+  text-align: center; /* Centra el título */
 }
 
 /* Estilo para el p */
 p {
-  text-align: justify;  /* Justifica el texto del párrafo */
-  color: #3880ff;  /* Cambia el color a uno que prefieras */
+  text-align: justify; /* Justifica el texto */
+  color: #3880ff; /* Cambia el color */
   font-size: 16px;
   font-weight: bold;
-  margin: 0 10px;  /* Agrega un margen para no estar pegado a los bordes */
+  margin: 0 10px; /* Agrega márgenes */
 }
 
-/* Centrado del grid */
+/* Ajustes para el ion-grid */
 ion-grid {
-  display: flex;
-  justify-content: center;  /* Centra el contenido del grid */
-  align-items: center;  /* Centra el contenido en el eje vertical */
-  flex-wrap: wrap;  /* Permite que las columnas se ajusten cuando el espacio sea pequeño */
-  margin: 20px;  /* Agrega margen alrededor del grid */
+  width: 100%; /* Asegura que el grid ocupe todo el ancho */
+  margin: 20px auto; /* Centra el grid */
 }
 
-/* Centrado de la fila y alineación horizontal */
-ion-row {
-  display: flex;
-  justify-content: space-between;  /* Separa las columnas dentro de la fila */
-  align-items: center;
-  width: 100%;  /* Asegura que la fila ocupe todo el ancho */
-  padding: 0 10px;  /* Agrega algo de espacio entre las columnas */
-}
-
-/* Estilo para las columnas */
+/* Ajustes para las columnas */
 ion-col {
-  display: flex;
-  justify-content: center;  /* Centra el contenido dentro de las columnas */
-  align-items: center;  /* Centra el contenido en el eje vertical */
-  text-align: center;  /* Centra el texto dentro de cada columna */
-  padding: 10px;  /* Agrega algo de espacio alrededor de cada columna */
-  margin: 0 10px;  /* Separa las columnas entre sí */
+  flex: 0 0 auto; /* Previene que las columnas se reduzcan */
+  max-width: 48%; /* Dos columnas por fila en pantallas pequeñas */
+  margin: 1%; /* Espacio entre columnas */
 }
 
-/* Estilo para los botones flotantes (ion-fab-button) pequeños */
+/* Ajustes para pantallas medianas */
+@media (min-width: 768px) {
+  ion-col {
+    max-width: 30%; /* Tres columnas por fila */
+  }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 1024px) {
+  ion-col {
+    max-width: 22%; /* Más columnas por fila */
+  }
+}
+
+/* Estilo para los botones flotantes */
 ion-fab-button {
-  --width: 40px;  /* Define el tamaño del botón flotante */
-  --height: 40px;  /* Define la altura del botón flotante */
-  --border-radius: 50%;  /* Hace que el botón sea redondeado */
+  --width: 40px;
+  --height: 40px;
+  --border-radius: 50%;
 }
 
 /* Estilo para el ion-fab-list */
 ion-fab-list {
-  align-items: flex-end;  /* Alinea los botones hacia el final */
-  margin-bottom: 15px;  /* Espacio inferior para los botones flotantes */
+  align-items: flex-end;
+  margin-bottom: 15px;
 }
 
-/* Estilo para los botones dentro del ion-fab-list */
 ion-fab-list ion-fab-button {
   position: relative;
   margin-bottom: 10px;
 }
 
-/* Etiqueta emergente del ion-fab-button */
 ion-fab-list ion-fab-button::before {
   content: attr(data-label);
   position: absolute;
@@ -76,13 +73,13 @@ ion-fab-list ion-fab-button::before {
   white-space: nowrap;
 }
 
-/* Estilo para el ion-button */
+/* Botón de acción */
 ion-button {
-  font-size: 14px;  /* Ajusta el tamaño del texto del botón */
-  padding: 8px 16px;  /* Ajusta el tamaño del botón */
+  font-size: 14px;
+  padding: 8px 16px;
   margin: 5px;
 }
 
 ion-button ion-icon {
-  font-size: 20px;  /* Ajusta el tamaño del icono dentro del botón */
+  font-size: 20px;
 }

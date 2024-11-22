@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Precio Becerras</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p>*Todos los becerros o becerras deberán tener factura, título de fierro de herrar y upp vigentes.</p>
+  <p>*Becerros números 2, 10 pesos menos por Kg.</p>
+  <p>*Becerros corrientes a criterio se reciben.</p>
+  <p>*Becerros con algún defecto que no sea grave se paga precio de consumo nacional o 20 pesos menos de la lista.</p>
+
+  <ion-grid class="styled-table">
+    <!-- Encabezados -->
+    <ion-row>
+      <ion-col><strong>Peso en Kg</strong></ion-col>
+      <ion-col><strong>Precio</strong></ion-col>
+      <ion-col><strong>#2</strong></ion-col>
+      <ion-col><strong>CN</strong></ion-col>
+      <ion-col><strong>Acciones</strong></ion-col>
+    </ion-row>
+
+    <!-- Filas dinámicas -->
+    <ion-row *ngFor="let row of data; let i = index; trackBy: trackByIndex">
+      <ion-col>
+        <ion-input [(ngModel)]="data[i].peso" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input [(ngModel)]="data[i].precio" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input [(ngModel)]="data[i].numero2" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-input [(ngModel)]="data[i].cn" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-button color="danger" (click)="removeRow(i)">
+          <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Botón para agregar filas -->
+  <ion-button class="add-row-btn" expand="block" (click)="addRow()">
+    <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+  </ion-button>
+</ion-content>

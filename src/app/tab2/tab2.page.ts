@@ -16,6 +16,8 @@ export class Tab2Page {
   profile: UserProfile | undefined;
   profileName: any;
   profileEmail: any;
+  profilePhone: any;
+  profileSecondName: any;
 
   constructor(
     private actionSheetController: ActionSheetController,
@@ -34,10 +36,15 @@ export class Tab2Page {
           if (profile){
             console.log("PROFILE", profile);
             this.profileName = profile['name'] || 'nombre no disponible';
+            this.profileSecondName = profile['secondName'] || 'apellido no disponible';
+            this.profilePhone = profile['phone'] || 'telefono no disponible';
             this.profileEmail = profile['email']  || 'email no disponible';
+            
           }else{
             console.log("PROFILE", profile);
             this.profileName = "no disponible ";
+            this.profileSecondName = 'no disponible'
+            this.profilePhone = "no disponible";
             this.profileEmail = "no disponible";
           }
         })

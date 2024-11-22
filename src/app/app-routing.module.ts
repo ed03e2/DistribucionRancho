@@ -36,6 +36,14 @@ const routes: Routes = [
   },  {
     path: 'login-phone',
     loadChildren: () => import('./login-phone/login-phone.module').then( m => m.LoginPhonePageModule)
+  },
+  {
+    path: 'price-becerros',
+    loadChildren: () => import('./price-becerros/price-becerros.module').then( m => m.PriceBecerrosPageModule)
+  },
+  {
+    path: 'price-becerras',
+    loadChildren: () => import('./price-becerras/price-becerras.module').then( m => m.PriceBecerrasPageModule)
   }
 
 ];

@@ -111,4 +111,12 @@ export class RanchoDetailPage implements OnInit {
   goBack() {
     this.router.navigate(['tabs/tab1']);
   }
+
+  async goToPriceBecerros(){
+    this.router.navigate(['/price-becerros']),{}
+  }
+
+  async goToPriceBecerras(){
+    this.router.navigate(['/price-becerras']),{}
+  }
 }
