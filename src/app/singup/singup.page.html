@@ -13,11 +13,9 @@
 
   <span>Crea tu cuenta completando el siguiente formulario</span>
 
-  <!-- Cambié el evento a ngSubmit -->
   <form [formGroup]="ValidationFormUser" (ngSubmit)="registerUser(ValidationFormUser.value)">
-
     <ion-item>
-      <ion-label>Nombre</ion-label>
+      <ion-label position="floating">Nombre</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
     <div>
@@ -29,7 +27,7 @@
     </div>
 
     <ion-item>
-      <ion-label>Apellido</ion-label>
+      <ion-label position="floating">Apellido</ion-label>
       <ion-input type="text" formControlName="secondName"></ion-input>
     </ion-item>
     <div>
@@ -41,7 +39,7 @@
     </div>
 
     <ion-item>
-      <ion-label>Correo electrónico</ion-label>
+      <ion-label position="floating">Correo electrónico</ion-label>
       <ion-input type="email" placeholder="correo@correo.com" formControlName="email"></ion-input>
     </ion-item>
     <div>
@@ -53,7 +51,7 @@
     </div>
 
     <ion-item>
-      <ion-label>Teléfono</ion-label>
+      <ion-label position="floating">Teléfono</ion-label>
       <ion-input type="text" placeholder="000-000-00-00" formControlName="phone"></ion-input>
     </ion-item>
     <div>
@@ -65,7 +63,7 @@
     </div>
 
     <ion-item>
-      <ion-label>Contraseña</ion-label>
+      <ion-label position="floating">Contraseña</ion-label>
       <ion-input type="password" placeholder="**************" formControlName="password"></ion-input>
     </ion-item>
     <div>

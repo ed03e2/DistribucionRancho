@@ -1,4 +1,4 @@
- <ion-header [translucent]="true">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Inicio de sesión</ion-title>
   </ion-toolbar>
@@ -11,13 +11,23 @@
     </ion-toolbar>
   </ion-header>
 
-  <span>Inicia sesión con tu correo electronico o numero registrado</span>
+  <span>Inicia sesión con tu correo electrónico o número registrado</span>
 
   <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
-    <ion-item>
-      <ion-label>Correo </ion-label>
-      <ion-input type="text" name="email" required formControlName="email"></ion-input>
-    </ion-item>
+    
+    <!-- Campo de correo con label flotante -->
+    <div class="floating-label">
+      <ion-item>
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input 
+          type="text" 
+          name="email" 
+          required 
+          formControlName="email"
+          placeholder="Correo electrónico"
+        ></ion-input>
+      </ion-item>
+    </div>
     
     <!-- Mensaje de error para el campo 'email' -->
     <div *ngIf="validationFormUser.get('email')?.invalid && (validationFormUser.get('email')?.dirty || validationFormUser.get('email')?.touched)">
@@ -27,13 +37,22 @@
         </div>
       </ng-container>
     </div>
-    <span>Coloca tu contraseña</span>
 
-    <ion-item>
-      <ion-label>Contraseña</ion-label>
-      <ion-input type="password" name="password" formControlName="password" placeholder="**************"></ion-input>
-    </ion-item>
+    <span>Coloca tu contraseña</span>
     
+    <!-- Campo de contraseña con label flotante -->
+    <div class="floating-label">
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input 
+          type="password" 
+          name="password" 
+          formControlName="password" 
+          placeholder="**************"
+        ></ion-input>
+      </ion-item>
+    </div>
+
     <!-- Mensaje de error para el campo 'password' -->
     <div *ngIf="validationFormUser.get('password')?.invalid && (validationFormUser.get('password')?.dirty || validationFormUser.get('password')?.touched)">
       <ng-container *ngFor="let validation of validationUserMessage.password">
@@ -44,7 +63,7 @@
     </div>
 
     <a [routerLink]="['/forgotpassword']">Olvidaste tu contraseña</a>
-    <ion-button type="submit" [disabled]="!validationFormUser.valid" >Iniciar sesión</ion-button>
+    <ion-button type="submit" [disabled]="!validationFormUser.valid">Iniciar sesión</ion-button>
 
     <span>O inicia sesión con</span>
     <ion-button>Facebook</ion-button>
@@ -52,6 +71,7 @@
 
     <span>¿No tienes cuenta? Crea una en</span>
     <a [routerLink]="['/singup']">Registrarse</a>
-   <span>¿No recuerdas el correo electronico?<a>Inicia sesion con tu telefono registrado</a></span>
+
+    <span>¿No recuerdas el correo electrónico?<a>Inicia sesión con tu teléfono registrado</a></span>
   </form>
 </ion-content>

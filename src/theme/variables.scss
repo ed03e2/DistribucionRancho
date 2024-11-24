@@ -1,2 +1,9 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+:root {
+    --ion-color-primary: #56BFBF; /* Cambia el color primario */
+    --ion-color-primary-rgb: 73, 156, 166; /* Cambia el color primario RGB */
+    --tab-bar-color: #013440; /* Color de fondo de la barra de pestañas */
+    --tab-button-color: #56BFBF; /* Color del texto e íconos de los botones */
+  }
