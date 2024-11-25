@@ -1,135 +1,128 @@
+/* Asegurando que el body no tenga márgenes adicionales */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+/* Estilo para ion-content */
 ion-content {
-    --background: #013440;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    color: #FFFFFF;
+  --background: #013440;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para el formulario */
+form {
+  background: #0F3D59;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 1s ease-in-out;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+/* Otros estilos para ion-item, ion-label, ion-input, ion-button */
+ion-item {
+  --background: transparent;
+  --color: #56BFBF;
+  border-bottom: 1px solid #56BFBF;
+  margin-bottom: 1.5rem; /* Aumenté el espacio entre cada input */
+  padding-left: 0;
+  padding-right: 0;
+  transition: transform 0.3s ease;
+}
+
+ion-item:hover {
+  transform: scale(1.02);
+}
+
+ion-label {
+  font-size: 1.5rem; /* Aumenté el tamaño del label */
+  color: #00BFBF; /* Color brillante para mayor visibilidad */
+  font-weight: bold; /* Mayor peso para los labels */
+  margin-bottom: 0.5rem; /* Mejor separación con los campos de entrada */
+  display: block;
+  text-align: left; /* Alineación a la izquierda */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+ion-label:hover {
+  color: #56BFBF; /* Cambio de color al pasar el mouse */
+  transform: scale(1.05); /* Aumento de tamaño al pasar el mouse */
+}
+
+ion-input {
+  margin-top: 0.5rem; /* Espacio entre el label y el input */
+  font-size: 1rem;
+  color: #FFFFFF;
+  background: transparent;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+span {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  display: block;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.error_message {
+  color: #FF6666;
+  font-size: 0.8rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+ion-button {
+  --background: #56BFBF;
+  --color: #0D0D0D;
+  width: 100%;
+  margin: 0.5rem 0;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ion-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  form {
-    background: #0F3D59;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 400px;
-    animation: fadeIn 1s ease-in-out;
+  to {
+    opacity: 1;
   }
-  
-  ion-item {
-    --background: transparent;
-    --color: #56BFBF;
-    border-bottom: 1px solid #56BFBF;
-    margin-bottom: 1.5rem; /* Aumenté el espacio entre cada input */
-    padding-left: 0;
-    padding-right: 0;
-    transition: transform 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
   }
-  
-  ion-item:hover {
-    transform: scale(1.02);
+  25% {
+    transform: translateX(-5px);
   }
-  
-  ion-label {
-    font-size: 1.5rem; /* Aumenté el tamaño del label */
-    color: #00BFBF; /* Color brillante para mayor visibilidad */
-    font-weight: bold; /* Mayor peso para los labels */
-    margin-bottom: 0.5rem; /* Mejor separación con los campos de entrada */
-    display: block;
-    text-align: left; /* Alineación a la izquierda */
-    letter-spacing: 1px; /* Espaciado entre letras */
-    transition: color 0.3s ease, transform 0.3s ease;
+  50% {
+    transform: translateX(5px);
   }
-  
-  ion-label:hover {
-    color: #56BFBF; /* Cambio de color al pasar el mouse */
-    transform: scale(1.05); /* Aumento de tamaño al pasar el mouse */
+  75% {
+    transform: translateX(-5px);
   }
-  
-  ion-input {
-    margin-top: 0.5rem; /* Espacio entre el label y el input */
-    font-size: 1rem;
-    color: #FFFFFF;
-    background: transparent;
-    border-radius: 5px;
-    padding: 10px;
-  }
-  
-  span {
-    color: #FFFFFF;
-    font-size: 0.9rem;
-    display: block;
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .error_message {
-    color: #FF6666;
-    font-size: 0.8rem;
-    animation: shake 0.5s ease-in-out;
-  }
-  
-  ion-button {
-    --background: #56BFBF;
-    --color: #0D0D0D;
-    width: 100%;
-    margin: 0.5rem 0;
-    border-radius: 24px;
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  ion-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  a {
-    color: #56BFBF;
-    font-weight: bold;
-    text-decoration: underline;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    display: inline-block;
-  }
-  
-  a:hover {
-    text-decoration: none;
-  }
-  
-  span a {
-    color: #56BFBF;
-  }
-  
-  span a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Animaciones */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes shake {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    25% {
-      transform: translateX(-5px);
-    }
-    50% {
-      transform: translateX(5px);
-    }
-    75% {
-      transform: translateX(-5px);
-    }
-  }
-  
+}

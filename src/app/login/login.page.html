@@ -11,9 +11,9 @@
     </ion-toolbar>
   </ion-header>
 
-  <span>Inicia sesión con tu correo electrónico o número registrado</span>
+  <span class="centered-text">Inicia sesión con tu correo electrónico o número registrado</span>
 
-  <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
+  <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)" class="centered-form">
     
     <!-- Campo de correo con label flotante -->
     <div class="floating-label">
@@ -38,7 +38,7 @@
       </ng-container>
     </div>
 
-    <span>Coloca tu contraseña</span>
+    <span class="centered-text">Coloca tu contraseña</span>
     
     <!-- Campo de contraseña con label flotante -->
     <div class="floating-label">
@@ -65,8 +65,7 @@
     <a [routerLink]="['/forgotpassword']">Olvidaste tu contraseña</a>
     <ion-button type="submit" [disabled]="!validationFormUser.valid">Iniciar sesión</ion-button>
 
-
-    <span>¿No tienes cuenta? Crea una en</span>
+    <span class="centered-text">¿No tienes cuenta? Crea una en</span>
     <a [routerLink]="['/singup']">Registrarse</a>
   </form>
 </ion-content>
