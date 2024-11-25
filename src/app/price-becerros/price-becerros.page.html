@@ -28,10 +28,10 @@
     <ion-row *ngFor="let row of data; let i = index; trackBy: trackByIndex">
 
       <ion-col>
-        <ion-input [(ngModel)]="data[i].peso" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
+        <ion-input [(ngModel)]="data[i].peso" (ngModelChange)="saveRow(i)" placeholder="Escribe el Peso"></ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="data[i].precio" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
+        <ion-input [(ngModel)]="data[i].precio" (ngModelChange)="saveRow(i)" placeholder="Escribe el precio"></ion-input>
       </ion-col>
       <ion-col>
         <ion-input [(ngModel)]="data[i].numero2" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Grupos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <!-- Redirige a chat-user -->
+    <ion-item (click)="goToRanchos()">
+      <ion-icon name="home-outline" slot="start"></ion-icon>
+      <ion-label>Ranchos</ion-label>
+    </ion-item>
+
+    <!-- Redirige a chat-admin -->
+    <ion-item (click)="goToAdmin()">
+      <ion-icon name="people-outline" slot="start"></ion-icon>
+      <ion-label>Admin</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

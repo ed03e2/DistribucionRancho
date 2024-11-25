@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -8,13 +7,9 @@ import { Router } from '@angular/router';
 })
 export class ChatPage implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  goBack(){
-    this.router.navigate(['/rancho-detail'])
   }
 
 }

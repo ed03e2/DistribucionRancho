@@ -75,10 +75,10 @@ export class RanchoDetailPage implements OnInit {
     await alert.present();
   }
 
-  openChat() {
-    this.router.navigate(['/chat']);
+  openGroups() {
+    this.router.navigate(['/grupos']);
   }
-
+  
   openUser() {
     this.router.navigate(['/users']);
   }

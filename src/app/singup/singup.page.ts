@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { AuthService } from '../service/auth.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TermsModalPage } from '../terms-modal/terms-modal.page';
 
 @Component({
   selector: 'app-singup',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./singup.page.scss'],
 })
 export class SingupPage implements OnInit {
+  termsAccepted: boolean = false; // Estado para saber si los términos han sido aceptados
+
   validationMessage = {
     name: [{ type: "required", message: "Por favor introduce tu nombre" }],
     secondName: [{ type: "required", message: "Por favor introduce tus apellidos" }],
@@ -33,7 +36,8 @@ export class SingupPage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private alertCtrl: AlertController,
-    private router: Router
+    private router: Router,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -97,5 +101,21 @@ export class SingupPage implements OnInit {
       message: "Cargando... por favor espere"
     });
     await this.loading.present();
+  }
+
+  async showTermsModal() {
+    const modal = await this.modalCtrl.create({
+      component: TermsModalPage
+    });
+    
+    modal.onDidDismiss().then((data) => {
+      if (data.data) {
+        this.termsAccepted = data.data.accepted; // Obtener el estado de aceptación
+      } else {
+        this.termsAccepted = false; // Resetear si se rechazó
+      }
+    });
+    
+    return await modal.present();
   }
 }

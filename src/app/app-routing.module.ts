@@ -26,14 +26,12 @@ const routes: Routes = [
     path: 'rancho-detail',
     loadChildren: () => import('./rancho-detail/rancho-detail.module').then( m => m.RanchoDetailPageModule)
   },
-  {
-    path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
-  },
+ 
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
-  },  {
+  },
+  {
     path: 'login-phone',
     loadChildren: () => import('./login-phone/login-phone.module').then( m => m.LoginPhonePageModule)
   },
@@ -52,7 +50,27 @@ const routes: Routes = [
   {
     path: 'price-becerros',
     loadChildren: () => import('./price-becerros/price-becerros.module').then( m => m.PriceBecerrosPageModule)
+  },
+  {
+    path: 'grupos',
+    loadChildren: () => import('./grupos/grupos.module').then( m => m.GruposPageModule)
+  },  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'chat-admin',
+    loadChildren: () => import('./chat-admin/chat-admin.module').then( m => m.ChatAdminPageModule)
+  },
+  {
+    path: 'chat-user',
+    loadChildren: () => import('./chat-user/chat-user.module').then( m => m.ChatUserPageModule)
+  },
+  {
+    path: 'terms-modal',
+    loadChildren: () => import('./terms-modal/terms-modal.module').then( m => m.TermsModalPageModule)
   }
+
 
 ];
 @NgModule({
