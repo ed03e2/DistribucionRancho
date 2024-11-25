@@ -34,8 +34,17 @@
             <p class="profile-email">{{profileEmail}}</p>
           </div>
         </div>
+        <h1>actualizar informacion</h1>
+        <ion-button (click)="openModalPassword()">
+          correo electronico
+        </ion-button>
+        <ion-button (click)="openModalEmail()">
+          contraseña
+        </ion-button>
       </ion-card-content>
     </ion-card>
+
+    
 
     <!-- Logout Button -->
     <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>

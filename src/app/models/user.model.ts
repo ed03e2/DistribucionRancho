@@ -4,5 +4,6 @@ export interface User {
     email: string;     // Correo electrónico
     phone?: string;    // Teléfono (opcional)
     secondName?: string; // Segundo nombre (opcional)
+    role: string;
     profileImageUrl?: string; // URL de la imagen de perfil (opcional)
   }

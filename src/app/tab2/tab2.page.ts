@@ -6,6 +6,9 @@ import {firebase} from 'src/app/firebase-config'
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../service/auth.service';
 import { UserProfile } from '../interfaces/user-profile';
+import { ModalController } from '@ionic/angular';
+import { UpdatePasswordComponent } from '../update-password/update-password.component';
+import { UpdateEmailComponent } from '../update-email/update-email.component';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -25,7 +28,8 @@ export class Tab2Page {
     private toastController: ToastController,
     private router: Router, // Inyectar Router
     private database : AngularFirestore,
-    private authservice: AuthService
+    private authservice: AuthService,
+    private modalCTRL: ModalController
   ) {
     firebase.auth().onAuthStateChanged( user=> {
       if (user){
@@ -36,8 +40,6 @@ export class Tab2Page {
           if (profile){
             console.log("PROFILE", profile);
             this.profileName = profile['name'] || 'nombre no disponible';
-            this.profileSecondName = profile['secondName'] || 'apellido no disponible';
-            this.profilePhone = profile['phone'] || 'telefono no disponible';
             this.profileEmail = profile['email']  || 'email no disponible';
             
           }else{
@@ -62,6 +64,25 @@ export class Tab2Page {
     
 
   }
+    async openModalEmail() {
+      const modal = await this.modalCTRL.create({
+        component: UpdateEmailComponent,
+      });
+  
+      modal.onDidDismiss()
+  
+      return await modal.present();
+    }
+    async openModalPassword() {
+      const modal = await this.modalCTRL.create({
+        component: UpdatePasswordComponent,
+      });
+  
+      modal.onDidDismiss()
+  
+      return await modal.present();
+    }
+
   
 
   async changeProfilePicture() {

@@ -54,9 +54,25 @@ export class LoginPage implements OnInit {
         //this.router.navigate(['tabs'])
         this.authservice.setUser({
           username: resp.user.diplayName,
-          uid: resp.user.uid
+          uid: resp.user.uid,
+          role:resp.user.role
         })
         if(resp.user){
+
+          this.authservice.getUserRole(resp.user.uid).then(
+            role => {
+              if (role === 'admin'){
+                console.log('El usuario es administrador');
+                this.nav.navigateForward(['tabs']);
+              } else{
+                console.log('El usuario es normal');
+                this.nav.navigateForward(['tabs']);
+              }
+            },
+            error => {
+              console.error('Error al obtener el rol del usuario:', error);
+            }
+          )
 
           
           const userProfile = this.firestore.collection('profile').doc(resp.user.uid);

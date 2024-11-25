@@ -14,8 +14,10 @@ import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { ProductsModalComponent } from './products-modal/products-modal.component';
 import { EditRanchoModalComponent } from './edit-rancho-modal/edit-rancho-modal.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { UpdateEmailComponent } from './update-email/update-email.component';
 @NgModule({
-  declarations: [AppComponent, RanchosModalComponent, ProductsModalComponent, EditRanchoModalComponent],
+  declarations: [AppComponent, RanchosModalComponent, ProductsModalComponent, EditRanchoModalComponent, UpdateEmailComponent, UpdatePasswordComponent],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
