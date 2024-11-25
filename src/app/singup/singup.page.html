@@ -75,8 +75,9 @@
     </div>
 
     <ion-button type="submit" [disabled]="!ValidationFormUser.valid">Registrarte</ion-button>
+    <span>¿Ya tienes una cuenta? Inicia sesión</span>
+    <a (click)="GoTologin()">Inicio de sesión</a>
   </form>
 
-  <span>¿Ya tienes una cuenta? Inicia sesión</span>
-  <ion-button (click)="GoTologin()">Inicio de sesión</ion-button>
+ 
 </ion-content>
