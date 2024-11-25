@@ -33,7 +33,8 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
-  },  {
+  },
+  {
     path: 'login-phone',
     loadChildren: () => import('./login-phone/login-phone.module').then( m => m.LoginPhonePageModule)
   },
@@ -44,7 +45,7 @@ const routes: Routes = [
   {
     path: 'price-becerras',
     loadChildren: () => import('./price-becerras/price-becerras.module').then( m => m.PriceBecerrasPageModule)
-  }
+  },
 
 ];
 @NgModule({

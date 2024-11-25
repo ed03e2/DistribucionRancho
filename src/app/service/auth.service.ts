@@ -33,7 +33,7 @@ export class AuthService {
   getUserUid(): string{
     return this.user.uid
   }
-
+//Conseguir el rol del usuario
   getUserRole(uid: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.firestore
@@ -53,7 +53,7 @@ export class AuthService {
         );
     });
   }
-
+//Usuario registrado
   userRegistration(value:any){
     return new Promise<any> ((resolve, reject)=>{
       this.auth.createUserWithEmailAndPassword(value.email, value.password).then(
@@ -73,7 +73,7 @@ export class AuthService {
       );
     });
   }
-
+//Olvidaste la contraseña funcion
   resetPassword(email: string){
     return new Promise<void> ((resolve, reject)=>{
       this.auth.sendPasswordResetEmail(email).then(
@@ -88,4 +88,39 @@ export class AuthService {
 loginPhoneauth(phoneNumber: string, appVerifier: firebase.auth.RecaptchaVerifier) {
   return this.auth.signInWithPhoneNumber(phoneNumber, appVerifier);
 }
+
+//Actualizar el correo electronico 
+updateEmail(newEmail:string):Promise<void>{
+  return new Promise<void>((resolve, reject) =>{
+    const user = this.auth.currentUser;
+    if(user) {
+      user.then(currentUser =>{
+        currentUser?.updateEmail(newEmail).then(()=>{
+          this.firestore.collection('users').doc(currentUser.uid).update({
+            email:newEmail
+          });
+          resolve();
+        })
+        .catch(error => reject(error));
+      });
+    }else{
+      reject('no hay usuario autenticado ')
+    }
+  })
+}
+//Actualizar la contraseña 
+updatePassword(newPassword: string): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    const user = this.auth.currentUser;
+    if (user) {
+      user.then(currentUser => {
+        currentUser?.updatePassword(newPassword).then(() => resolve()).catch(error => reject(error));
+      });
+    } else {
+      reject('No hay un usuario autenticado.');
+    }
+  });
+}
+//Autenticar nuevamente 
+
 }
