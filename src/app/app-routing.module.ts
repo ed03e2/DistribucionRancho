@@ -57,7 +57,12 @@ const routes: Routes = [
   {
     path: 'grupos',
     loadChildren: () => import('./grupos/grupos.module').then( m => m.GruposPageModule)
-  }
+  },
+  {
+    path: 'terms-modal',
+    loadChildren: () => import('./terms-modal/terms-modal.module').then(m => m.TermsModalPageModule)
+  },
+ 
 
 ];
 @NgModule({

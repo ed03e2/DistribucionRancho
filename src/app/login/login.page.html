@@ -65,7 +65,8 @@
     <a [routerLink]="['/forgotpassword']">Olvidaste tu contraseña</a>
     <ion-button type="submit" [disabled]="!validationFormUser.valid">Iniciar sesión</ion-button>
 
-    <span class="centered-text">¿No tienes cuenta? Crea una en</span>
-    <a [routerLink]="['/singup']">Registrarse</a>
+    <div class="centered-text" style="color: white;">
+      ¿No tienes una cuenta? <a [routerLink]="['/singup']">Regístrate</a>
+    </div>
   </form>
 </ion-content>

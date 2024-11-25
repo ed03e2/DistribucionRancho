@@ -4,6 +4,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { AuthService } from '../service/auth.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';  // Importamos ToastController
 import { TermsModalPage } from '../terms-modal/terms-modal.page';
 
 @Component({
@@ -37,10 +38,12 @@ export class SingupPage implements OnInit {
     private authService: AuthService,
     private alertCtrl: AlertController,
     private router: Router,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController // Inyectamos el ToastController
   ) { }
 
   ngOnInit() {
+    // Agregar la validación para 'termsAccepted' como obligatorio y verdadero
     this.ValidationFormUser = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
@@ -52,15 +55,17 @@ export class SingupPage implements OnInit {
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6)
-      ])
+      ]),
+      termsAccepted: [false, Validators.requiredTrue] // Aquí validamos que sea verdadero
     });
   }
 
-  GoTologin() {
-    this.nav.navigateForward(['login']);
+  navigate() {
+    this.router.navigate(['/login']);
   }
 
   async registerUser(value: any) {
+    // Comprobamos si el formulario es válido y si los términos fueron aceptados
     if (this.ValidationFormUser.valid) {
       this.showalert();
       try {
@@ -70,9 +75,20 @@ export class SingupPage implements OnInit {
             displayName: value.name
           });
           this.loading.dismiss();
+
+          // Mostrar el toast de "Registro exitoso"
+          const toast = await this.toastCtrl.create({
+            message: 'Registro exitoso',
+            duration: 2000, // Duración del toast
+            position: 'bottom', // Posición en la pantalla
+            color: 'success' // Color verde para éxito
+          });
+          toast.present(); // Mostrar el toast
+
+          // Navegar a la página de login después de mostrar el toast
           this.router.navigate(['login']);
         }
-      } catch (error:any) {
+      } catch (error: any) {
         this.loading.dismiss();
         this.errorLoading("Error al registrarse: " + error.message);
         console.error(error);
@@ -111,8 +127,11 @@ export class SingupPage implements OnInit {
     modal.onDidDismiss().then((data) => {
       if (data.data) {
         this.termsAccepted = data.data.accepted; // Obtener el estado de aceptación
+        // Actualizamos el estado del formulario de acuerdo a la respuesta
+        this.ValidationFormUser.get('termsAccepted')?.setValue(this.termsAccepted);
       } else {
         this.termsAccepted = false; // Resetear si se rechazó
+        this.ValidationFormUser.get('termsAccepted')?.setValue(this.termsAccepted);
       }
     });
     

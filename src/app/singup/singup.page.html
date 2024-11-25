@@ -75,13 +75,13 @@
     </div>
 
     <div class="terms-container">
-      <ion-checkbox [(ngModel)]="termsAccepted" (click)="showTermsModal()"></ion-checkbox>
+      <ion-checkbox formControlName="termsAccepted" (click)="showTermsModal()"></ion-checkbox>
       <label (click)="showTermsModal()" class="terms-text">He leído y acepto los términos y condiciones</label>
     </div>
 
     <ion-button type="submit" [disabled]="!ValidationFormUser.valid">Registrarte</ion-button>
-    <span>¿Ya tienes una cuenta? Inicia sesión</span>
-    <a (click)="GoTologin()">Inicio de sesión</a>
+    
+    <p class="register-text">¿Ya tienes una cuenta? <a [routerLink]="['/login']">Inicia sesión</a></p>
   </form>
 
  
