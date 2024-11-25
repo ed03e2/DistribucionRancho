@@ -16,7 +16,6 @@
   <p>*Becerros con algún defecto que no sea grave se paga precio de consumo nacional o 20 pesos menos de la lista.</p>
 
   <ion-grid class="styled-table">
-    <!-- Encabezados -->
     <ion-row>
       <ion-col><strong>Peso en Kg</strong></ion-col>
       <ion-col><strong>Precio</strong></ion-col>
@@ -27,17 +26,18 @@
 
     <!-- Filas dinámicas -->
     <ion-row *ngFor="let row of data; let i = index; trackBy: trackByIndex">
+
       <ion-col>
-        <ion-input [(ngModel)]="data[i].peso" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+        <ion-input [(ngModel)]="data[i].peso" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="data[i].precio" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+        <ion-input [(ngModel)]="data[i].precio" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="data[i].numero2" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+        <ion-input [(ngModel)]="data[i].numero2" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="data[i].cn" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+        <ion-input [(ngModel)]="data[i].cn" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
       </ion-col>
       <ion-col>
         <ion-button color="danger" (click)="removeRow(i)">
@@ -47,7 +47,6 @@
     </ion-row>
   </ion-grid>
 
-  <!-- Botón para agregar filas -->
   <ion-button class="add-row-btn" expand="block" (click)="addRow()">
     <ion-icon slot="icon-only" name="add-outline"></ion-icon>
   </ion-button>

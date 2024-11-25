@@ -44,6 +44,14 @@ const routes: Routes = [
   {
     path: 'price-becerras',
     loadChildren: () => import('./price-becerras/price-becerras.module').then( m => m.PriceBecerrasPageModule)
+  },
+  {
+    path: 'price-becerros',
+    loadChildren: () => import('./price-becerros/price-becerros.module').then( m => m.PriceBecerrosPageModule)
+  },
+  {
+    path: 'price-becerros',
+    loadChildren: () => import('./price-becerros/price-becerros.module').then( m => m.PriceBecerrosPageModule)
   }
 
 ];

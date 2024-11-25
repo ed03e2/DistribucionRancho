@@ -15,8 +15,9 @@
   <p>*Becerros corrientes a criterio se reciben.</p>
   <p>*Becerros con algún defecto que no sea grave se paga precio de consumo nacional o 20 pesos menos de la lista.</p>
 
+  <!-- Tabla de becerras -->
   <ion-grid class="styled-table">
-    <!-- Encabezados -->
+    <!-- Encabezados de la tabla -->
     <ion-row>
       <ion-col><strong>Peso en Kg</strong></ion-col>
       <ion-col><strong>Precio</strong></ion-col>
@@ -26,19 +27,20 @@
     </ion-row>
 
     <!-- Filas dinámicas -->
-    <ion-row *ngFor="let row of data; let i = index; trackBy: trackByIndex">
-      <ion-col>
-        <ion-input [(ngModel)]="data[i].peso" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+    <ion-row *ngFor="let item of data; let i = index; trackBy: trackByIndex">
+      <ion-col size="3">
+        <ion-input [(ngModel)]="item.peso" placeholder="Peso" (ngModelChange)="saveRow(i)"></ion-input>
       </ion-col>
-      <ion-col>
-        <ion-input [(ngModel)]="data[i].precio" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+      <ion-col size="3">
+        <ion-input [(ngModel)]="item.precio" placeholder="Precio" (ngModelChange)="saveRow(i)"></ion-input>
       </ion-col>
-      <ion-col>
-        <ion-input [(ngModel)]="data[i].numero2" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+      <ion-col size="3">
+        <ion-input [(ngModel)]="item.numero2" placeholder="Número 2" (ngModelChange)="saveRow(i)"></ion-input>
       </ion-col>
-      <ion-col>
-        <ion-input [(ngModel)]="data[i].cn" (ngModelChange)="saveDataToLocalStorage()" placeholder="Escribir..."></ion-input>
+      <ion-col size="3">
+        <ion-input [(ngModel)]="item.cn" placeholder="CN" (ngModelChange)="saveRow(i)"></ion-input>
       </ion-col>
+
       <ion-col>
         <ion-button color="danger" (click)="removeRow(i)">
           <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
@@ -47,7 +49,7 @@
     </ion-row>
   </ion-grid>
 
-  <!-- Botón para agregar filas -->
+  <!-- Botón para agregar nuevas filas -->
   <ion-button class="add-row-btn" expand="block" (click)="addRow()">
     <ion-icon slot="icon-only" name="add-outline"></ion-icon>
   </ion-button>

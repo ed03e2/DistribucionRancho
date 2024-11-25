@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-price-becerras',
@@ -7,43 +8,89 @@ import { Router } from '@angular/router';
   styleUrls: ['./price-becerras.page.scss'],
 })
 export class PriceBecerrasPage implements OnInit {
+  data: { id?: string; peso: string; precio: string; numero2: string; cn: string }[] = []; // Array de datos
 
-  data: { peso: string, precio: string, numero2: string, cn: string }[] = [];
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private firestore: AngularFirestore) {}
 
   ngOnInit() {
-     // Recuperar datos desde el localStorage si existen
-     const storedData = localStorage.getItem('becerrasData');
-     if (storedData) {
-       this.data = JSON.parse(storedData);
-     }
+    // Recuperar los datos de Firebase al cargar la página
+    this.firestore
+      .collection('becerras') // Reemplaza 'becerras' por el nombre de tu colección en Firebase
+      .valueChanges({ idField: 'id' }) // Incluye el ID del documento
+      .subscribe((data: any) => {
+        this.data = data;
+        console.log('Datos cargados de Firebase:', this.data);
+      });
   }
+
   // Método para agregar una nueva fila
   addRow() {
-    this.data.push({ peso: '', precio: '', numero2: '', cn: '' });
-    this.saveDataToLocalStorage();
+    const nuevaFila = { peso: '', precio: '', numero2: '', cn: '' };
+    this.firestore
+      .collection('becerras') // Reemplaza 'becerras' con tu colección
+      .add(nuevaFila)
+      .then((docRef) => {
+        console.log('Fila agregada con ID:', docRef.id);
+      })
+      .catch((error) => {
+        this.handleError('Error al agregar fila', error);
+      });
   }
 
   // Método para eliminar una fila
   removeRow(index: number) {
-    this.data.splice(index, 1);
-    this.saveDataToLocalStorage();
+    const id = this.data[index].id; // ID del documento en Firebase
+    if (id) {
+      this.firestore
+        .collection('becerras')
+        .doc(id)
+        .delete()
+        .then(() => {
+          console.log('Fila eliminada con ID:', id);
+        })
+        .catch((error) => {
+          this.handleError('Error al eliminar fila', error);
+        });
+    }
   }
 
-  // Guardar los datos en localStorage
-  saveDataToLocalStorage() {
-    console.log("Guardando datos en el localStorage:", this.data); // Verificar los datos antes de guardarlos
-    localStorage.setItem('becerrasData', JSON.stringify(this.data));
+  // Método para guardar cambios en una fila
+  saveRow(index: number) {
+    const id = this.data[index].id; // ID del documento en Firebase
+    const updatedData = {
+      peso: this.data[index].peso,
+      precio: this.data[index].precio,
+      numero2: this.data[index].numero2,
+      cn: this.data[index].cn,
+    };
+
+    if (id) {
+      this.firestore
+        .collection('becerras')
+        .doc(id)
+        .update(updatedData)
+        .then(() => {
+          console.log('Fila actualizada con ID:', id);
+        })
+        .catch((error) => {
+          this.handleError('Error al actualizar fila', error);
+        });
+    }
   }
 
-  // Ir atrás a la página anterior
+  // Método para navegar a la página anterior
   goBack() {
     this.router.navigate(['/rancho-detail']);
   }
 
-  // trackBy para mejorar el rendimiento y evitar reinicios de la página
+  // trackBy para mejorar el rendimiento de las filas
   trackByIndex(index: number, item: any): number {
-    return index;  // Utiliza el índice para el seguimiento
+    return index;
+  }
+
+  // Método para manejar errores
+  private handleError(message: string, error: any) {
+    console.error(message, error);
+    alert(`${message}: ${error.message}`);
   }
 }
