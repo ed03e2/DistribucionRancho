@@ -36,8 +36,6 @@ export class Tab2Page {
           if (profile){
             console.log("PROFILE", profile);
             this.profileName = profile['name'] || 'nombre no disponible';
-            this.profileSecondName = profile['secondName'] || 'apellido no disponible';
-            this.profilePhone = profile['phone'] || 'telefono no disponible';
             this.profileEmail = profile['email']  || 'email no disponible';
             
           }else{

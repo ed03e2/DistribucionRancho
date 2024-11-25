@@ -3,6 +3,7 @@ import { ModalController, AlertController, LoadingController } from '@ionic/angu
 import { RanchosModalComponent } from '../ranchos-modal/ranchos-modal.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-tab1',
@@ -11,19 +12,32 @@ import { Router } from '@angular/router';
 })
 export class Tab1Page implements OnInit {
   ranchos: any[] = [];
+  isAdmin: boolean = false;
 
   constructor(
     private modalController: ModalController,
     private firestore: AngularFirestore,
     private router: Router,
     private alertController: AlertController, 
-    private loadingController: LoadingController 
+    private loadingController: LoadingController,
+    private authservice:AuthService
   ) {}
 
   ngOnInit() {
     this.loadRanchos(); 
+    const uid = this.authservice.getUserUid();
+    this.authservice.getUserRole(uid).then(
+      role => {
+        this.isAdmin = role === 'admin';
+        console.log('¿Es administrador?', this.isAdmin);
+      },
+      error => {
+        console.error('Error al obtener el rol:', error);
+      }
+    );
   }
 
+  
   async showLoading() {
     const loading = await this.loadingController.create({
       message: 'Cargando...',

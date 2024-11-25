@@ -12,12 +12,15 @@
       <ion-title size="large">Rancherias</ion-title>  
     </ion-toolbar>
   </ion-header>
-
+<div *ngIf="isAdmin">
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+</div>
+
 
   <div class="rancho-list">
     <ion-card *ngFor="let rancho of ranchos" class="rancho-card" (click)="goToRanchoDetail(rancho.nombre, rancho.descripcion, rancho.psg)">
