@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductsModalComponent } from '../products-modal/products-modal.component';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthService } from '../service/auth.service'; // Asegúrate de importar tu servicio de autenticación
 import { EditRanchoModalComponent } from '../edit-rancho-modal/edit-rancho-modal.component';
 
 @Component({
@@ -13,29 +13,44 @@ import { EditRanchoModalComponent } from '../edit-rancho-modal/edit-rancho-modal
 export class RanchoDetailPage implements OnInit {
   ranchoNombre: string | undefined;
   ranchoDescripcion: string | undefined;
-  ranchoPsg: string | undefined; // Nuevo campo
+  ranchoPsg: string | undefined; 
   ranchoId: string | undefined;
+  isAdmin: boolean = false; // Variable para verificar si el usuario es administrador
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private modalController: ModalController,
     private alertController: AlertController,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private authService: AuthService // Servicio para roles
   ) {}
 
   ngOnInit() {
-    // Retrieve query parameters and set them to variables
+    this.loadUserRole(); // Cargar el rol del usuario
+
+    // Obtener parámetros de la ruta
     this.route.queryParams.subscribe(params => {
       this.ranchoNombre = params['nombre'];
       this.ranchoDescripcion = params['descripcion'];
-      this.ranchoPsg = params['psg']; // Asignar el PSG
-      this.ranchoId = params['id']
+      this.ranchoPsg = params['psg'];
+      this.ranchoId = params['id'];
       this.loadRanchoId();
     });
   }
 
-  // Method to load the rancho ID based on its name
+  // Cargar el rol del usuario
+  async loadUserRole() {
+    const uid = this.authService.getUserUid();
+    try {
+      const role = await this.authService.getUserRole(uid);
+      this.isAdmin = role === 'admin'; // Verificar si el rol es "admin"
+      console.log('¿Es administrador?', this.isAdmin);
+    } catch (error) {
+      console.error('Error al obtener el rol:', error);
+    }
+  }
+
   async loadRanchoId() {
     const snapshot = await this.firestore.collection('ranchos', ref =>
       ref.where('nombre', '==', this.ranchoNombre)
@@ -44,28 +59,27 @@ export class RanchoDetailPage implements OnInit {
     if (snapshot && !snapshot.empty) {
       this.ranchoId = snapshot.docs[0].id;
     } else {
-      console.error("Rancho not found");
+      console.error("Rancho no encontrado");
     }
   }
 
-  // Method to delete the rancho with a confirmation alert
   async deleteRancho() {
     const alert = await this.alertController.create({
-      header: 'Confirm Deletion',
-      message: 'Are you sure you want to delete this rancho?',
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro de que quieres eliminar este rancho?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel'
         },
         {
-          text: 'Delete',
+          text: 'Eliminar',
           handler: async () => {
             if (this.ranchoId) {
               await this.firestore.collection('ranchos').doc(this.ranchoId).delete();
-              this.router.navigate(['/tabs/tab1']); // Navigate back to the ranchos list
+              this.router.navigate(['/tabs/tab1']);
             } else {
-              console.error("Rancho not found for deletion");
+              console.error("Rancho no encontrado para eliminar");
             }
           }
         }
@@ -73,14 +87,6 @@ export class RanchoDetailPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  openGroups() {
-    this.router.navigate(['/grupos']);
-  }
-  
-  openUser() {
-    this.router.navigate(['/users']);
   }
 
   async openEditModal() {
@@ -95,7 +101,7 @@ export class RanchoDetailPage implements OnInit {
         ranchoId: this.ranchoId
       }
     });
-  
+
     modal.onDidDismiss().then((data) => {
       if (data.data) {
         const updatedRancho = data.data;
@@ -104,18 +110,26 @@ export class RanchoDetailPage implements OnInit {
         this.ranchoPsg = updatedRancho.psg;
       }
     });
-  
-    await modal.present(); // Asegúrate de llamar a present() para mostrar el modal
+
+    await modal.present();
   }
-  
+
   goBack() {
     this.router.navigate(['tabs/tab1']);
   }
 
+  openGroups() {
+    this.router.navigate(['/grupos']);
+  }
+  
+  openUser() {
+    this.router.navigate(['/users']);
+  }
+  
   async goToPriceBecerros(){
     this.router.navigate(['/price-becerros']),{}
   }
-
+  
   async goToPriceBecerras(){
     this.router.navigate(['/price-becerras']),{}
   }

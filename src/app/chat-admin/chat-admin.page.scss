@@ -1,0 +1,30 @@
+/* Estilos para los mensajes del admin */
+.admin-message {
+    background-color: #007bff;  /* Color azul para los admins */
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    max-width: 80%;
+    margin-left: 20px;
+  }
+  
+  /* Estilos para los mensajes del usuario */
+  .user-message {
+    background-color: #e0e0e0;  /* Color gris claro para los usuarios */
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+    max-width: 80%;
+    margin-right: 20px;
+  }
+  
+  /* Estilos comunes para las burbujas de chat */
+  .chat-bubble {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  

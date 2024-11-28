@@ -1,18 +1,21 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="dark" (click)="goBack()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
+      <ion-back-button (click)="goBack()"></ion-back-button>
     </ion-buttons>
-    <ion-title>Grupos</ion-title>
+    <ion-title>Chat Admin</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">chat-admin</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div *ngFor="let message of messages" [ngClass]="getMessageColor(message)" class="chat-bubble">
+    <div class="chat-bubble" *ngIf="message.userRole === 'admin'">Admin</div>
+    <p>{{ message.text }}</p>
+    <small>{{ message.timestamp.toDate() | date: 'short' }}</small>
+  </div>
+
+  <ion-item>
+    <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje"></ion-input>
+  </ion-item>
+  <ion-button (click)="sendMessage()">Enviar</ion-button>
 </ion-content>

@@ -26,10 +26,7 @@ const routes: Routes = [
     path: 'rancho-detail',
     loadChildren: () => import('./rancho-detail/rancho-detail.module').then( m => m.RanchoDetailPageModule)
   },
-  {
-    path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
-  },
+ 
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
@@ -62,6 +59,14 @@ const routes: Routes = [
     path: 'terms-modal',
     loadChildren: () => import('./terms-modal/terms-modal.module').then(m => m.TermsModalPageModule)
   },
+  {
+    path:'chat-admin',
+    loadChildren: () => import('./chat-admin/chat-admin.module').then(m => m.ChatAdminPageModule)
+  },
+  {
+    path: 'chat-user',
+    loadChildren: () => import('./chat-user/chat-user.module').then(m => m.ChatUserPageModule)
+  }
  
 
 ];

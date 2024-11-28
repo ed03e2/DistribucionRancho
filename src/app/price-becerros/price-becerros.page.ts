@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthService } from '../service/auth.service';// Asegúrate de que existe este servicio
 
 @Component({
   selector: 'app-price-becerros',
@@ -8,26 +9,47 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./price-becerros.page.scss'],
 })
 export class PriceBecerrosPage implements OnInit {
-  data: { id?: string; peso: string; precio: string; numero2: string; cn: string }[] = []; // Array de datos
+  data: { id?: string; peso: string; precio: string; numero2: string; cn: string }[] = [];
+  isAdmin: boolean = false; // Propiedad para controlar permisos
 
-  constructor(private router: Router, private firestore: AngularFirestore) {}
+  constructor(
+    private router: Router,
+    private firestore: AngularFirestore,
+    private authService: AuthService // Inyecta el servicio de autenticación
+  ) {}
 
   ngOnInit() {
     // Recuperar los datos de Firebase al cargar la página
     this.firestore
-      .collection('becerros') // Asegúrate de que 'becerros' es el nombre de la colección correcta
-      .valueChanges({ idField: 'id' }) // Incluye el ID del documento
+      .collection('becerros')
+      .valueChanges({ idField: 'id' })
       .subscribe((data: any) => {
         this.data = data;
         console.log('Datos cargados de Firebase:', this.data);
       });
+
+    // Obtener el rol del usuario
+    const uid = this.authService.getUserUid();
+    this.authService.getUserRole(uid).then(
+      (role) => {
+        this.isAdmin = role === 'admin'; // Cambiar según el rol requerido
+        console.log('¿Es administrador?', this.isAdmin);
+      },
+      (error) => {
+        console.error('Error al obtener el rol:', error);
+      }
+    );
   }
 
-  // Método para agregar una nueva fila
   addRow() {
+    if (!this.isAdmin) {
+      console.warn('No tienes permisos para agregar filas.');
+      return;
+    }
+
     const nuevaFila = { peso: '', precio: '', numero2: '', cn: '' };
     this.firestore
-      .collection('becerros') // Reemplaza 'becerros' con tu colección
+      .collection('becerros')
       .add(nuevaFila)
       .then((docRef) => {
         console.log('Fila agregada con ID:', docRef.id);
@@ -37,9 +59,13 @@ export class PriceBecerrosPage implements OnInit {
       });
   }
 
-  // Método para eliminar una fila
   removeRow(index: number) {
-    const id = this.data[index].id; // ID del documento en Firebase
+    if (!this.isAdmin) {
+      console.warn('No tienes permisos para eliminar filas.');
+      return;
+    }
+
+    const id = this.data[index].id;
     if (id) {
       this.firestore
         .collection('becerros')
@@ -54,9 +80,13 @@ export class PriceBecerrosPage implements OnInit {
     }
   }
 
-  // Método para guardar cambios en una fila
   saveRow(index: number) {
-    const id = this.data[index].id; // ID del documento en Firebase
+    if (!this.isAdmin) {
+      console.warn('No tienes permisos para guardar cambios.');
+      return;
+    }
+
+    const id = this.data[index].id;
     const updatedData = {
       peso: this.data[index].peso,
       precio: this.data[index].precio,
@@ -78,13 +108,11 @@ export class PriceBecerrosPage implements OnInit {
     }
   }
 
-  // Navegar a la página anterior
   goBack() {
     this.router.navigate(['/rancho-detail']);
   }
 
-  // trackBy para mejorar el rendimiento de las filas
   trackByIndex(index: number): number {
-    return index; // Seguimiento por índice
+    return index;
   }
 }

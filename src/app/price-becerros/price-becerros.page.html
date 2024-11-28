@@ -21,25 +21,44 @@
       <ion-col><strong>Precio</strong></ion-col>
       <ion-col><strong>#2</strong></ion-col>
       <ion-col><strong>CN</strong></ion-col>
-      <ion-col><strong>Acciones</strong></ion-col>
+      <ion-col *ngIf="isAdmin"><strong>Acciones</strong></ion-col>
     </ion-row>
 
     <!-- Filas dinámicas -->
     <ion-row *ngFor="let row of data; let i = index; trackBy: trackByIndex">
-
       <ion-col>
-        <ion-input [(ngModel)]="data[i].peso" (ngModelChange)="saveRow(i)" placeholder="Escribe el Peso"></ion-input>
+        <ion-input 
+          [(ngModel)]="data[i].peso" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribe el Peso" 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="data[i].precio" (ngModelChange)="saveRow(i)" placeholder="Escribe el precio"></ion-input>
+        <ion-input 
+          [(ngModel)]="data[i].precio" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribe el Precio" 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="data[i].numero2" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
+        <ion-input 
+          [(ngModel)]="data[i].numero2" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribir..." 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="data[i].cn" (ngModelChange)="saveRow(i)" placeholder="Escribir..."></ion-input>
+        <ion-input 
+          [(ngModel)]="data[i].cn" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribir..." 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
-      <ion-col>
+      <ion-col *ngIf="isAdmin">
         <ion-button color="danger" (click)="removeRow(i)">
           <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
         </ion-button>
@@ -47,7 +66,12 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button class="add-row-btn" expand="block" (click)="addRow()">
+  <!-- Botón para agregar fila (solo visible para admin) -->
+  <ion-button 
+    *ngIf="isAdmin" 
+    class="add-row-btn" 
+    expand="block" 
+    (click)="addRow()">
     <ion-icon slot="icon-only" name="add-outline"></ion-icon>
   </ion-button>
 </ion-content>

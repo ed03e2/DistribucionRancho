@@ -68,6 +68,7 @@
   </ion-fab>
 
   <!-- Botones de acción -->
+   <div *ngIf="isAdmin">
   <ion-button size="default" shape="round" color="success" (click)="openEditModal()">
     <ion-icon name="create-outline"></ion-icon> Editar
   </ion-button>
@@ -75,4 +76,5 @@
   <ion-button shape="round" color="danger" (click)="deleteRancho()">
     <ion-icon name="trash-outline"></ion-icon> Delete
   </ion-button>
+</div>
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.page.html',
@@ -10,7 +11,8 @@ export class ForgotpasswordPage implements OnInit {
 email: string='';
   constructor(
     private Authservice: AuthService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -33,4 +35,7 @@ email: string='';
     toast.present();
   }
 
+  goBack() {
+    this.router.navigate(['/login']);
+  }
 }
