@@ -4,7 +4,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../service/auth.service'; // Asegúrate de importar tu servicio de autenticación
 import { EditRanchoModalComponent } from '../edit-rancho-modal/edit-rancho-modal.component';
-
+import { UserComponent } from '../user/user.component';
 @Component({
   selector: 'app-rancho-detail',
   templateUrl: './rancho-detail.page.html',
@@ -15,6 +15,7 @@ export class RanchoDetailPage implements OnInit {
   ranchoDescripcion: string | undefined;
   ranchoPsg: string | undefined; 
   ranchoId: string | undefined;
+  codigoVerificacion: string | undefined // Campo para el código de verificación
   isAdmin: boolean = false; // Variable para verificar si el usuario es administrador
 
   constructor(
@@ -57,11 +58,53 @@ export class RanchoDetailPage implements OnInit {
     ).get().toPromise();
 
     if (snapshot && !snapshot.empty) {
+      const ranchoData = snapshot.docs[0].data() as any; // Asegúrate de que el campo exista
       this.ranchoId = snapshot.docs[0].id;
+      this.codigoVerificacion = ranchoData.codigoVerificacion; // Cargar el código de verificación desde la base de datos
+      console.log('Código de verificación cargado:', this.codigoVerificacion);
     } else {
       console.error("Rancho no encontrado");
     }
   }
+  async addUserToRancho(codigoVerificacion: string) {
+    const snapshot = await this.firestore.collection('ranchos', ref =>
+      ref.where('codigoVerificacion', '==', codigoVerificacion)
+    ).get().toPromise();
+
+    if (snapshot && !snapshot.empty) {
+      // Encontramos el rancho con el código de verificación
+      const ranchoDoc = snapshot.docs[0];
+      const ranchoId = ranchoDoc.id;
+
+      // Obtener datos del usuario (puedes obtener estos datos de tu sistema de autenticación)
+      const user = await this.authService.getCurrentUser();  // Método ficticio
+      const userData = {
+        userId: user.uid,
+        userName: user.displayName,
+        userEmail: user.email
+      };
+
+      // Crear la subcolección "usuarios" dentro del rancho
+      await this.firestore.collection('ranchos').doc(ranchoId).collection('usuarios').add(userData);
+
+      console.log("Usuario agregado al rancho");
+    } else {
+      console.error("Código de verificación no válido");
+    }
+  }
+
+  // Método para abrir el modal de usuarios
+  async openUserModal(ranchoId: string) {
+    console.log("hola", ranchoId);
+      const modal = await this.modalController.create({
+        component: UserComponent,
+        componentProps: { ranchoId }
+
+        
+      });
+  
+      await modal.present();
+    }
 
   async deleteRancho() {
     const alert = await this.alertController.create({

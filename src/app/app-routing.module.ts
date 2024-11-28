@@ -26,11 +26,6 @@ const routes: Routes = [
     path: 'rancho-detail',
     loadChildren: () => import('./rancho-detail/rancho-detail.module').then( m => m.RanchoDetailPageModule)
   },
- 
-  {
-    path: 'users',
-    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
-  },
   {
     path: 'login-phone',
     loadChildren: () => import('./login-phone/login-phone.module').then( m => m.LoginPhonePageModule)

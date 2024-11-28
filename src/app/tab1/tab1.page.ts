@@ -76,22 +76,29 @@ export class Tab1Page implements OnInit {
   }
 
   async goToRanchoDetail(nombre: string, descripcion: string, psg: string) {
-    const inscrito = localStorage.getItem(`rancho_${nombre}`);
+    // Comprobar si ya está inscrito en Firestore
+    const uid = this.authservice.getUserUid();
+    const snapshot = await this.firestore.collection('inscripciones', ref =>
+      ref.where('uid', '==', uid).where('nombreRancho', '==', nombre)
+    ).get().toPromise();
   
-    if (inscrito) {
+    if (snapshot && !snapshot.empty) {
+      // Usuario ya inscrito, redirigir a detalles
       this.router.navigate(['/rancho-detail'], {
-        queryParams: { 
-          nombre: nombre,
-          descripcion: descripcion,
-          psg: psg
-        }
+        queryParams: { nombre, descripcion, psg }
       });
       return;
     }
   
+    // Obtener el nombre del usuario desde Firebase Authentication
+    const user = await this.authservice.getUser(); // Asegúrate de que este método devuelva la información del usuario autenticado
+    const userName= user!.displayName || 'Usuario desconocido'; 
+    console.log(userName)// Puedes usar el nombre del usuario o un valor predeterminado si no está disponible
+  
+    // Solicitar el código de verificación si no está inscrito
     const alert = await this.alertController.create({
       header: 'Código de Verificación',
-      message: 'Por favor ingrese el código de verificación para acceder a los detalles del rancho.',
+      message: 'Por favor ingrese el código de verificación para acceder a esta clase.',
       inputs: [
         {
           name: 'codigoVerificacion',
@@ -102,37 +109,45 @@ export class Tab1Page implements OnInit {
       buttons: [
         {
           text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            console.log('Acceso denegado');
-          }
+          role: 'cancel'
         },
         {
           text: 'Aceptar',
           handler: async (data) => {
             const codigoIngresado = data.codigoVerificacion;
   
-            const snapshot = await this.firestore.collection('ranchos', ref =>
+            // Validar el código ingresado con Firestore
+            const ranchoSnapshot = await this.firestore.collection('ranchos', ref =>
               ref.where('nombre', '==', nombre)
             ).get().toPromise();
   
-            if (snapshot && !snapshot.empty) {
-              const ranchoData = snapshot.docs[0].data() as { codigoVerificacion: string };
+            if (ranchoSnapshot && !ranchoSnapshot.empty) {
+              const ranchoDoc = ranchoSnapshot.docs[0];
+              const ranchoData = ranchoDoc.data() as { codigoVerificacion: string };
   
               if (codigoIngresado === ranchoData.codigoVerificacion) {
-                localStorage.setItem(`rancho_${nombre}`, 'inscrito');
+                // Guardar inscripción en Firestore
+                await ranchoDoc.ref.collection('usuarios').doc(uid).set({
+                  nombre: userName,  // Guardamos el nombre del usuario
+                  uid,
+                  fecha: new Date()
+                });
   
+                await this.firestore.collection('inscripciones').add({
+                  uid,
+                  nombreRancho: nombre,
+                  fecha: new Date()
+                });
+  
+                // Redirigir a los detalles del rancho
                 this.router.navigate(['/rancho-detail'], {
-                  queryParams: { 
-                    nombre: nombre,
-                    descripcion: descripcion 
-                  }
+                  queryParams: { nombre, descripcion, psg }
                 });
               } else {
-                this.showErrorAlert();
+                this.showErrorAlert('Código incorrecto');
               }
             } else {
-              this.showErrorAlert();
+              this.showErrorAlert('Rancho no encontrado');
             }
           }
         }
@@ -142,13 +157,12 @@ export class Tab1Page implements OnInit {
     await alert.present();
   }
 
-  async showErrorAlert() {
+  async showErrorAlert(message: string) {
     const alert = await this.alertController.create({
       header: 'Error',
-      message: 'El código de verificación es incorrecto. Intenta nuevamente.',
+      message,
       buttons: ['OK']
     });
-
     await alert.present();
   }
 }

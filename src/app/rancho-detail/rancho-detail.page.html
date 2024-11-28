@@ -58,7 +58,7 @@
       <ion-fab-button (click)="openGroups()" color="danger" data-label="chat">
         <ion-icon name="chatbubbles-outline"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="openUser()" color="success" data-label="users">
+      <ion-fab-button *ngIf="ranchoId"  (click)=" openUserModal(ranchoId)"  color="success" data-label="users">
         <ion-icon name="person-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-button>

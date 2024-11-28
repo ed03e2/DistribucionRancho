@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Usuarios Registrados</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let usuario of usuarios">
+      <ion-label>
+        <h2>{{ usuario.nombre}}</h2>
+        <p>{{ usuario.uid}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-text *ngIf="usuarios.length === 0">
+    <p>No hay usuarios registrados para este curso.</p>
+  </ion-text>
+</ion-content>

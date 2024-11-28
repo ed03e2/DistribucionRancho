@@ -121,6 +121,21 @@ updatePassword(newPassword: string): Promise<void> {
     }
   });
 }
+async getCurrentUser(){
+  const user = await this.auth.currentUser;
+  if (user) {
+    return {
+      uid: user.uid,
+      displayName: user.displayName || 'Usuario sin nombre',
+      email: user.email || 'Correo no disponible',
+    };
+  } else {
+    throw new Error('No hay un usuario autenticado');
+  }
+}
 //Autenticar nuevamente 
+getUser() {
+  return this.auth.currentUser;  // Obtiene el usuario actual
+}
 
 }
