@@ -1,72 +1,61 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Inicio de sesión</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Inicio de sesión</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<div class="wave-background">
+  <img src="assets/rancho.jpeg" class="logo" alt="Logo">
 
-  <span class="centered-text">Inicia sesión con tu correo electrónico o número registrado</span>
+</div>
+<ion-content >
+  <div class="form-container">
+    <h1 class="titulo">Login </h1>
+    <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
 
-  <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)" class="centered-form">
-    
-    <!-- Campo de correo con label flotante -->
-    <div class="floating-label">
-      <ion-item>
-        <ion-label position="floating">Correo</ion-label>
-        <ion-input 
-          type="text" 
-          name="email" 
-          required 
-          formControlName="email"
-          placeholder="Correo electrónico"
-        ></ion-input>
-      </ion-item>
-    </div>
-    
-    <!-- Mensaje de error para el campo 'email' -->
-    <div *ngIf="validationFormUser.get('email')?.invalid && (validationFormUser.get('email')?.dirty || validationFormUser.get('email')?.touched)">
-      <ng-container *ngFor="let validation of validationUserMessage.email">
-        <div class="error_message" *ngIf="validationFormUser.get('email')?.hasError(validation.type)">
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
+      <div class="floating-label">
+        <ion-item>
+          <ion-label position="floating"></ion-label>
+          <ion-input 
+            type="text" 
+            name="email" 
+            required 
+            formControlName="email"
+            placeholder="Correo electrónico"
+          ></ion-input>
+        </ion-item>
+      </div>
+      
+      <div *ngIf="validationFormUser.get('email')?.invalid && (validationFormUser.get('email')?.dirty || validationFormUser.get('email')?.touched)">
+        <ng-container *ngFor="let validation of validationUserMessage.email">
+          <div class="error_message" *ngIf="validationFormUser.get('email')?.hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
 
-    <span class="centered-text">Coloca tu contraseña</span>
-    
-    <!-- Campo de contraseña con label flotante -->
-    <div class="floating-label">
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input 
-          type="password" 
-          name="password" 
-          formControlName="password" 
-          placeholder="**************"
-        ></ion-input>
-      </ion-item>
-    </div>
+      
+      <div class="floating-label">
+        <ion-item>
+          <ion-label position="floating"></ion-label>
+          <ion-input 
+            type="password" 
+            name="password" 
+            formControlName="password" 
+            placeholder="Contraseña"
+          ></ion-input>
+        </ion-item>
+      </div>
 
-    <!-- Mensaje de error para el campo 'password' -->
-    <div *ngIf="validationFormUser.get('password')?.invalid && (validationFormUser.get('password')?.dirty || validationFormUser.get('password')?.touched)">
-      <ng-container *ngFor="let validation of validationUserMessage.password">
-        <div class="error_message" *ngIf="validationFormUser.get('password')?.hasError(validation.type)">
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
+      <div *ngIf="validationFormUser.get('password')?.invalid && (validationFormUser.get('password')?.dirty || validationFormUser.get('password')?.touched)">
+        <ng-container *ngFor="let validation of validationUserMessage.password">
+          <div class="error_message" *ngIf="validationFormUser.get('password')?.hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
 
-    <a [routerLink]="['/forgotpassword']">Olvidaste tu contraseña</a>
-    <ion-button type="submit" [disabled]="!validationFormUser.valid">Iniciar sesión</ion-button>
+      <a [routerLink]="['/forgotpassword']">Olvidaste tu contraseña?</a>
+      <ion-button type="submit" [disabled]="!validationFormUser.valid">Iniciar sesión</ion-button>
 
-    <div class="centered-text" style="color: white;">
-      ¿No tienes una cuenta? <a [routerLink]="['/singup']">Regístrate</a>
-    </div>
-  </form>
+      <div class="centered-text" style="color: black;">
+        ¿No tienes una cuenta? <a [routerLink]="['/singup']">Regístrate</a>
+      </div>
+    </form>
+  </div>
 </ion-content>

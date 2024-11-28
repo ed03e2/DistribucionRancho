@@ -1,42 +1,52 @@
-/* Asegurando que el body no tenga márgenes adicionales */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
+/* Fondo de ola */
+.wave-background {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Marrón chocolate a Tierra */
+  height: 250px;
+  border-bottom-left-radius: 50% 30%;
+  border-bottom-right-radius: 50% 30%;
+  position: relative;
+  z-index: -1; /* Asegurar que permanezca detrás de otros elementos */
 }
 
-/* Estilo para ion-content */
-ion-content {
-  --background: #013440;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.logo {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: auto;
 }
 
-/* Estilo para el formulario */
-form {
-  background: #0F3D59;
-  border-radius: 12px;
+/* Contenedor del formulario */
+.form-container {
+  margin: 60px auto;
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 400px;
-  animation: fadeIn 1s ease-in-out;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-
+  width: 100%;
+  max-width: 400px;
+  background:transparent; /* Siena */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1s ease-in-out;
 }
 
-/* Otros estilos para ion-item, ion-label, ion-input, ion-button */
+/* Texto centrado */
+.centered-text {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Estilos para los ion-item */
 ion-item {
   --background: transparent;
-  --color: #56BFBF;
-  border-bottom: 1px solid #56BFBF;
-  margin-bottom: 1.5rem; /* Aumenté el espacio entre cada input */
+  --color: #FFFFFF; /* Mostaza suave */
+  border-bottom: 1px solid #DAA520;
+  margin-bottom: 1.5rem;
   padding-left: 0;
   padding-right: 0;
   transition: transform 0.3s ease;
@@ -46,47 +56,46 @@ ion-item:hover {
   transform: scale(1.02);
 }
 
+/* Etiquetas */
 ion-label {
-  font-size: 1.5rem; /* Aumenté el tamaño del label */
-  color: #00BFBF; /* Color brillante para mayor visibilidad */
-  font-weight: bold; /* Mayor peso para los labels */
-  margin-bottom: 0.5rem; /* Mejor separación con los campos de entrada */
+  font-size: 1.5rem;
+  color: #000000; /* Verde oliva */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
   display: block;
-  text-align: left; /* Alineación a la izquierda */
-  letter-spacing: 1px; /* Espaciado entre letras */
+  text-align: left;
+  letter-spacing: 1px;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-ion-label:hover {
-  color: #56BFBF; /* Cambio de color al pasar el mouse */
-  transform: scale(1.05); /* Aumento de tamaño al pasar el mouse */
+.titulo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4a4a4a;
+  margin-bottom: 40px;
 }
 
+
+/* Campos de entrada */
 ion-input {
-  margin-top: 0.5rem; /* Espacio entre el label y el input */
+  margin-top: 0.5rem;
   font-size: 1rem;
-  color: #FFFFFF;
+  color: #000;
   background: transparent;
   border-radius: 5px;
   padding: 10px;
 }
 
-span {
-  color: #FFFFFF;
-  font-size: 0.9rem;
-  display: block;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
+/* Mensajes de error */
 .error_message {
-  color: #FF6666;
+  color: #B22222; /* Rojo ladrillo */
   font-size: 0.8rem;
   animation: shake 0.5s ease-in-out;
 }
 
+/* Botón de inicio de sesión */
 ion-button {
-  --background: #56BFBF;
+  --background: #DAA520; /* Mostaza suave */
   --color: #0D0D0D;
   width: 100%;
   margin: 0.5rem 0;
@@ -100,6 +109,18 @@ ion-button {
 ion-button:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Enlaces */
+a {
+  color: #0e42d1; /* Mostaza suave */
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #0e42d1; /* Siena */
 }
 
 /* Animaciones */

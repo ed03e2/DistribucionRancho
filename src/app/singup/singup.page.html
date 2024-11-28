@@ -1,84 +1,91 @@
+<div class="wave-background">
+  <!-- El wave permanece detrás -->
+  <img src="assets/rancho.jpeg" class="logo" alt="Logo">
+</div>
+
+<ion-content>
+  <!-- Contenedor principal -->
+  <div class="main-container">
+    <h1 class="titulo">Registrate</h1>
 
 
-<ion-content >
-  <ion-header >
-    <ion-toolbar>
-      <ion-title size="large">Registrarte</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <form [formGroup]="ValidationFormUser" (ngSubmit)="registerUser(ValidationFormUser.value)">
+      <!-- Campo Nombre -->
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="text" placeholder="Nombre" formControlName="name"></ion-input>
+      </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationMessage.name">
+          <div class="error_message" *ngIf="ValidationFormUser.get('name')?.hasError(validation.type) && (ValidationFormUser.get('name')?.dirty || ValidationFormUser.get('name')?.touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
 
-  <span>Crea tu cuenta completando el siguiente formulario</span>
+      <!-- Campo Apellido -->
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="text" placeholder="Apellido" formControlName="secondName"></ion-input>
+      </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationMessage.secondName">
+          <div class="error_message" *ngIf="ValidationFormUser.get('secondName')?.hasError(validation.type) && (ValidationFormUser.get('secondName')?.dirty || ValidationFormUser.get('secondName')?.touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
 
-  <form [formGroup]="ValidationFormUser" (ngSubmit)="registerUser(ValidationFormUser.value)">
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
-    <div>
-      <ng-container *ngFor="let validation of validationMessage.name">
-        <div class="error_message" *ngIf="ValidationFormUser.get('name')?.hasError(validation.type) && (ValidationFormUser.get('name')?.dirty || ValidationFormUser.get('name')?.touched)">
-          {{validation.message}}
-        </div>
-      </ng-container>
-    </div>
+      <!-- Campo Correo -->
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationMessage.email">
+          <div class="error_message" *ngIf="ValidationFormUser.get('email')?.hasError(validation.type) && (ValidationFormUser.get('email')?.dirty || ValidationFormUser.get('email')?.touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Apellido</ion-label>
-      <ion-input type="text" formControlName="secondName"></ion-input>
-    </ion-item>
-    <div>
-      <ng-container *ngFor="let validation of validationMessage.secondName">
-        <div class="error_message" *ngIf="ValidationFormUser.get('secondName')?.hasError(validation.type) && (ValidationFormUser.get('secondName')?.dirty || ValidationFormUser.get('secondName')?.touched)">
-          {{validation.message}}
-        </div>
-      </ng-container>
-    </div>
+      <!-- Campo Teléfono -->
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="text" placeholder="Telefono" formControlName="phone"></ion-input>
+      </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationMessage.phone">
+          <div class="error_message" *ngIf="ValidationFormUser.get('phone')?.hasError(validation.type) && (ValidationFormUser.get('phone')?.dirty || ValidationFormUser.get('phone')?.touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Correo electrónico</ion-label>
-      <ion-input type="email" placeholder="correo@correo.com" formControlName="email"></ion-input>
-    </ion-item>
-    <div>
-      <ng-container *ngFor="let validation of validationMessage.email">
-        <div class="error_message" *ngIf="ValidationFormUser.get('email')?.hasError(validation.type) && (ValidationFormUser.get('email')?.dirty || ValidationFormUser.get('email')?.touched)">
-          {{validation.message}}
-        </div>
-      </ng-container>
-    </div>
+      <!-- Campo Contraseña -->
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="password" placeholder="Contraseña" formControlName="password"></ion-input>
+      </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validationMessage.password">
+          <div class="error_message" *ngIf="ValidationFormUser.get('password')?.hasError(validation.type) && (ValidationFormUser.get('password')?.dirty || ValidationFormUser.get('password')?.touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Teléfono</ion-label>
-      <ion-input type="text" placeholder="000-000-00-00" formControlName="phone"></ion-input>
-    </ion-item>
-    <div>
-      <ng-container *ngFor="let validation of validationMessage.phone">
-        <div class="error_message" *ngIf="ValidationFormUser.get('phone')?.hasError(validation.type) && (ValidationFormUser.get('phone')?.dirty || ValidationFormUser.get('phone')?.touched)">
-          {{validation.message}}
-        </div>
-      </ng-container>
-    </div>
+      <!-- Checkbox -->
+      <div class="terms-container">
+        <ion-checkbox formControlName="termsAccepted" (click)="showTermsModal()"></ion-checkbox>
+        <label (click)="showTermsModal()" class="terms-text">He leído y acepto los términos y condiciones</label>
+      </div>
 
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" placeholder="**************" formControlName="password"></ion-input>
-    </ion-item>
-    <div>
-      <ng-container *ngFor="let validation of validationMessage.password">
-        <div class="error_message" *ngIf="ValidationFormUser.get('password')?.hasError(validation.type) && (ValidationFormUser.get('password')?.dirty || ValidationFormUser.get('password')?.touched)">
-          {{validation.message}}
-        </div>
-      </ng-container>
-    </div>
-
-    <div class="terms-container">
-      <ion-checkbox formControlName="termsAccepted" (click)="showTermsModal()"></ion-checkbox>
-      <label (click)="showTermsModal()" class="terms-text">He leído y acepto los términos y condiciones</label>
-    </div>
-
-    <ion-button type="submit" [disabled]="!ValidationFormUser.valid">Registrarte</ion-button>
-    
-    <p class="register-text">¿Ya tienes una cuenta? <a [routerLink]="['/login']">Inicia sesión</a></p>
-  </form>
-
- 
+      <!-- Botón Registrar -->
+      <ion-button type="submit" [disabled]="!ValidationFormUser.valid">Registrarte</ion-button>
+      
+      <!-- Link a iniciar sesión -->
+      <p class="register-text">¿Ya tienes una cuenta? <a [routerLink]="['/login']">Inicia sesión</a></p>
+    </form>
+  </div>
 </ion-content>

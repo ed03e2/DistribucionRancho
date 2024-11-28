@@ -1,224 +1,172 @@
-ion-header {
-    --background: #013440;
-  }
-  
-  ion-content {
-    --background: #013440;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.8rem;
-    color: #FFFFFF;
-  }
-  
-  form {
-    background: #0F3D59;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+:root {
+  --ion-padding-bottom: 0px;
+}
+
+/* Fondo con ondas */
+.wave-background {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Marrón chocolate a Tierra */
+  height: 180px; /* Altura ajustada para móviles */
   width: 100%;
-  max-width: 400px;
-  animation: fadeIn 1s ease-in-out;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  position: relative;
+  border-bottom-left-radius: 50% 20%; /* Ondas menos pronunciadas */
+  border-bottom-right-radius: 50% 20%;
+  z-index: 0; /* Fondo detrás */
+}
+
+/* Logo dentro del fondo */
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 1; /* Encima del fondo */
+}
+
+/* Contenido principal */
+ion-content {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  position: relative; /* Necesario para manejar el stacking de z-index */
+  padding: 16px;
+  z-index: 2; /* Asegurar que el contenido esté al frente */
+}
+
+/* Formulario */
+.main-container {
+  margin: 60px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background:transparent; /* Siena */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Estilo de los campos */
+ion-item {
+  --background: transparent;
+  --color: #FFFFFF; /* Mostaza suave */
+  border-bottom: 1px solid #DAA520;
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  transition: transform 0.3s ease;
+}
+
+ion-item:hover {
+  transform: scale(1.02);
+}
+
+ion-label {
+  font-size: 0.85rem; /* Texto más compacto */
+  color: #4a4a4a;
+  font-weight: bold;
+  margin-bottom: 0.3rem; /* Reducir espacio inferior */
+  display: block;
+  text-align: left;
+  letter-spacing: 0.8px;
+}
+
+ion-input {
+  margin-top: 0.3rem; /* Reducir espacio superior */
+  font-size: 0.9rem;
+  color: #000;
+  background: transparent;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.error_message {
+  color: #FF6666;
+  font-size: 0.8rem;
+}
+
+/* Botón de registro */
+ion-button {
+  --background: #DAA520; /* Mostaza suave */
+  --color: #0D0D0D;
+  width: 100%;
+  margin: 0.5rem 0;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ion-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+ion-button:disabled {
+  opacity: 0.5;
+}
+
+/* Texto de registro */
+.register-text {
+  color: #4a4a4a;
+  font-size: 0.8rem; /* Texto más pequeño */
+  margin-top: 10px;
+  text-align: center;
+}
+
+.register-text a {
+  color: #3a7bd5;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+/* Términos y condiciones */
+.terms-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem; /* Reducir espacio inferior */
+}
+
+.terms-text {
+  margin-left: 8px;
+  color: #4a4a4a;
+  font-size: 0.85rem; /* Texto compacto */
+  cursor: pointer;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  ion-item {
-    --background: transparent;
-    --color: #56BFBF;
-    border-bottom: 1px solid #56BFBF;
-    margin-bottom: 1rem;
-    padding-left: 0;
-    padding-right: 0;
-    transition: transform 0.3s ease;
+  to {
+    opacity: 1;
   }
-  
-  ion-item:hover {
-    transform: scale(1.02);
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
   }
-  
-  ion-label {
-    font-size: 1.2rem;
-    color: #00BFBF;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    display: block;
-    text-align: left;
-    letter-spacing: 0.8px;
-    background-color: transparent !important; /* Asegura que no tenga fondo */
-    transition: color 0.3s ease, transform 0.3s ease;
+  25% {
+    transform: translateX(-5px);
   }
-  
-  ion-label:hover {
-    color: #56BFBF;
-    transform: scale(1.05);
+  50% {
+    transform: translateX(5px);
   }
-  
-  ion-input {
-    margin-top: 0.5rem;
-    font-size: 1rem;
-    color: #FFFFFF;
-    background: transparent;
-    border-radius: 5px;
-    padding: 8px;
+  75% {
+    transform: translateX(-5px);
   }
-  
-  span {
-    color: #FFFFFF;
-    font-size: 0.85rem;
-    display: block;
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .error_message {
-    color: #FF6666;
-    font-size: 0.7rem;
-    animation: shake 0.5s ease-in-out;
-  }
-  
-  ion-button {
-    --background: #56BFBF;
-    --color: #0D0D0D;
-    width: 100%;
-    margin: 1rem 0; /* Aumentado espacio superior e inferior */
-    border-radius: 30px; /* Bordes más redondeados */
-    font-size: 1.1rem;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    padding: 12px 0; /* Espaciado adicional */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  }
-  
-  ion-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-    background: #00BFBF; /* Cambio de color al hacer hover */
-  }
-  
-  ion-button:active {
-    transform: scale(1.05); /* Efecto al presionar el botón */
-    background: #00A2A2; /* Color más oscuro al presionar */
-  }
-  
-  a {
-    color: #56BFBF;
-    font-weight: bold;
-    text-decoration: underline;
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-    display: inline-block;
-  }
-  
-  a:hover {
-    text-decoration: none;
-  }
-  
-  span a {
-    color: #56BFBF;
-  }
-  
-  span a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Animaciones */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes shake {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    25% {
-      transform: translateX(-5px);
-    }
-    50% {
-      transform: translateX(5px);
-    }
-    75% {
-      transform: translateX(-5px);
-    }
-  }
-  
-  /* Media Queries para pantallas más pequeñas */
-  @media (max-width: 767px) {
-    ion-header {
-      --background: #013440;
-    }
-  
-    ion-content {
-      padding: 0.5rem;
-    }
-  
-    form {
-      max-width: 100%;
-      padding: 10px;
-    }
-  
-    ion-label {
-      font-size: 1rem;
-    }
-  
-    ion-input {
-      font-size: 0.9rem;
-      padding: 6px;
-    }
-  
-    ion-button {
-      font-size: 0.9rem;
-      padding: 12px 0;
-    }
-  
-    span {
-      font-size: 0.75rem;
-    }
-  
-    .error_message {
-      font-size: 0.6rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    form {
-      padding: 8px;
-    }
-  
-    ion-item {
-      margin-bottom: 0.8rem;
-    }
-  
-    ion-label {
-      font-size: 0.9rem;
-    }
-  
-    ion-input {
-      font-size: 0.85rem;
-      padding: 5px;
-    }
-  
-    ion-button {
-      font-size: 0.8rem;
-      padding: 12px 0;
-      margin: 0.5rem 0;
-    }
-  
-    span {
-      font-size: 0.7rem;
-    }
-  
-    .error_message {
-      font-size: 0.5rem;
-    }
-  }
-  
+}
