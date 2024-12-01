@@ -13,6 +13,7 @@ import { AuthService } from '../service/auth.service';
 export class Tab1Page implements OnInit {
   ranchos: any[] = [];
   isAdmin: boolean = false;
+  userName: string = ''; // Variable para almacenar el nombre del usuario
 
   constructor(
     private modalController: ModalController,
@@ -20,11 +21,12 @@ export class Tab1Page implements OnInit {
     private router: Router,
     private alertController: AlertController, 
     private loadingController: LoadingController,
-    private authservice:AuthService
+    private authservice: AuthService
   ) {}
 
   ngOnInit() {
     this.loadRanchos(); 
+    this.loadUserDetails(); // Llamar al método para cargar el nombre del usuario
     const uid = this.authservice.getUserUid();
     this.authservice.getUserRole(uid).then(
       role => {
@@ -37,7 +39,20 @@ export class Tab1Page implements OnInit {
     );
   }
 
-  
+  async loadUserDetails() {
+    try {
+      const user = await this.authservice.getCurrentUser();
+      if (user) {
+        this.userName = user.displayName || 'Usuario desconocido'; // Asignar el nombre del usuario o un valor predeterminado
+        console.log('Nombre de usuario cargado:', this.userName);
+      } else {
+        console.warn('Usuario no autenticado');
+      }
+    } catch (error) {
+      console.error('Error al cargar los detalles del usuario:', error);
+    }
+  }
+
   async showLoading() {
     const loading = await this.loadingController.create({
       message: 'Cargando...',
@@ -48,17 +63,16 @@ export class Tab1Page implements OnInit {
   }
 
   async loadRanchos() {
-    const loading = await this.showLoading(); // Mostrar el loading card
+    const loading = await this.showLoading();
 
-    // Cargar ranchos desde Firestore
     this.firestore.collection('ranchos').valueChanges().subscribe(
       (data: any[]) => {
-        this.ranchos = data; // Actualizar ranchos solo después de completar la carga
-        loading.dismiss(); // Ocultar el loading card
+        this.ranchos = data;
+        loading.dismiss();
       },
       error => {
         console.error("Error al cargar los ranchos:", error);
-        loading.dismiss(); // Ocultar el loading card en caso de error
+        loading.dismiss();
       }
     );
   }
@@ -76,26 +90,18 @@ export class Tab1Page implements OnInit {
   }
 
   async goToRanchoDetail(nombre: string, descripcion: string, psg: string) {
-    // Comprobar si ya está inscrito en Firestore
     const uid = this.authservice.getUserUid();
     const snapshot = await this.firestore.collection('inscripciones', ref =>
       ref.where('uid', '==', uid).where('nombreRancho', '==', nombre)
     ).get().toPromise();
-  
+
     if (snapshot && !snapshot.empty) {
-      // Usuario ya inscrito, redirigir a detalles
       this.router.navigate(['/rancho-detail'], {
         queryParams: { nombre, descripcion, psg }
       });
       return;
     }
-  
-    // Obtener el nombre del usuario desde Firebase Authentication
-    const user = await this.authservice.getUser(); // Asegúrate de que este método devuelva la información del usuario autenticado
-    const userName= user!.displayName || 'Usuario desconocido'; 
-    console.log(userName)// Puedes usar el nombre del usuario o un valor predeterminado si no está disponible
-  
-    // Solicitar el código de verificación si no está inscrito
+
     const alert = await this.alertController.create({
       header: 'Código de Verificación',
       message: 'Por favor ingrese el código de verificación para acceder a esta clase.',
@@ -115,31 +121,28 @@ export class Tab1Page implements OnInit {
           text: 'Aceptar',
           handler: async (data) => {
             const codigoIngresado = data.codigoVerificacion;
-  
-            // Validar el código ingresado con Firestore
+
             const ranchoSnapshot = await this.firestore.collection('ranchos', ref =>
               ref.where('nombre', '==', nombre)
             ).get().toPromise();
-  
+
             if (ranchoSnapshot && !ranchoSnapshot.empty) {
               const ranchoDoc = ranchoSnapshot.docs[0];
               const ranchoData = ranchoDoc.data() as { codigoVerificacion: string };
-  
+
               if (codigoIngresado === ranchoData.codigoVerificacion) {
-                // Guardar inscripción en Firestore
                 await ranchoDoc.ref.collection('usuarios').doc(uid).set({
-                  nombre: userName,  // Guardamos el nombre del usuario
+                  nombre: this.userName,  // Usar el nombre del usuario cargado
                   uid,
                   fecha: new Date()
                 });
-  
+
                 await this.firestore.collection('inscripciones').add({
                   uid,
                   nombreRancho: nombre,
                   fecha: new Date()
                 });
-  
-                // Redirigir a los detalles del rancho
+
                 this.router.navigate(['/rancho-detail'], {
                   queryParams: { nombre, descripcion, psg }
                 });
@@ -153,7 +156,7 @@ export class Tab1Page implements OnInit {
         }
       ]
     });
-  
+
     await alert.present();
   }
 

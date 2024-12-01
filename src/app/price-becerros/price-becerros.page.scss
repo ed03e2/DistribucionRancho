@@ -1,24 +1,110 @@
+/* Estilo general para la tabla */
 .styled-table {
-    border: 1px solid #ccc;
-  }
-  
-  ion-row {
-    border-bottom: 1px solid #ccc;
-  }
-  
-  ion-col {
-    border-right: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-  }
-  
-  ion-col:last-child {
-    border-right: none; /* Elimina la línea del último elemento */
-  }
-  
-  .add-row-btn {
-    margin-top: 20px;
-    --background: #3880ff;
-    --color: white;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+ion-row {
+  border-bottom: 1px solid #ccc; /* Línea divisoria entre filas */
+}
+
+ion-col {
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #ccc; /* Líneas divisorias verticales entre las columnas */
+  display: flex;
+  justify-content: center; /* Centrar contenido horizontalmente */
+  align-items: center; /* Centrar contenido verticalmente */
+  min-height: 60px; /* Altura mínima para las celdas */
+}
+
+/* Elimina la línea del último ion-col para que no haya borde derecho innecesario */
+ion-col:last-child {
+  border-right: none;
+}
+
+/* Estilo para los encabezados de la tabla */
+ion-row:first-child ion-col {
+  background-color: #f4f4f4; /* Fondo gris claro para los encabezados */
+  font-weight: bold;
+  color: #333; /* Color oscuro para el texto */
+}
+
+/* Estilo para las filas de la tabla */
+ion-row:nth-child(odd) {
+  background-color: #f9f9f9; /* Color alterno para las filas */
+}
+
+ion-row:nth-child(even) {
+  background-color: #ffffff; /* Color para las filas pares */
+}
+
+/* Estilo para los botones de "Acciones" */
+ion-button[color="danger"] {
+  --background: #3880ff; /* Fondo azul, igual que el de "Agregar fila" */
+  --color: white; /* Color del texto en blanco */
+  --border-radius: 8px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  padding: 10px 15px; /* Espaciado interno del botón */
+}
+
+/* Estilo para el botón de agregar fila */
+.add-row-btn {
+  margin-top: 20px;
+  --background: #3880ff; /* Fondo azul */
+  --color: white;
+  --border-radius: 8px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de la fuente */
+  padding: 10px 15px; /* Espaciado interno */
+}
+
+
+/* Hacer que el contenido de la tabla se vea más claro y definido */
+ion-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc; /* Bordes suaves */
+}
+
+/* Centrar los inputs dentro de los ion-col */
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc; /* Bordes suaves */
+  border-radius: 8px;
+}
+
+/* Estilo cuando se pasa el mouse sobre las filas */
+ion-row:hover {
+  background-color: #eaeaea;
+  cursor: pointer;
+}
+/* Estilo para el título en el header */
+ion-title {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+  color: white; /* Texto blanco para buen contraste */
+  padding: 10px; /* Espaciado alrededor del título */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Estilo para el toolbar del header */
+ion-toolbar {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a tierra */
+}
+
+/* Estilo para el ion-col dentro del grid */
+ion-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para el ion-header */
+ion-header {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+}

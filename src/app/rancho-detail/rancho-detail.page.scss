@@ -1,85 +1,106 @@
-/* Estilo para el h2 */
+/* Establece el color de fondo general para el contenido */
+body, ion-content {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a tierra */
+}
+
+/* Estilo para el título principal */
 h2 {
-  text-align: center; /* Centra el título */
-}
-
-/* Estilo para el p */
-p {
-  text-align: justify; /* Justifica el texto */
-  color: #3880ff; /* Cambia el color */
-  font-size: 16px;
+  text-align: center;
+  font-size: 24px;
   font-weight: bold;
-  margin: 0 10px; /* Agrega márgenes */
+  color: white; /* Color blanco para contraste */
+  margin-top: 20px;
 }
 
-/* Ajustes para el ion-grid */
+/* Estilo para la descripción */
+p {
+  text-align: justify;
+  font-size: 16px;
+  color: #000000; /* Texto blanco */
+  padding: 0 15px;
+  margin-bottom: 20px;
+}
+
+/* Estilos para el ion-grid */
 ion-grid {
-  width: 100%; /* Asegura que el grid ocupe todo el ancho */
-  margin: 20px auto; /* Centra el grid */
+  padding: 0 10px;
 }
 
-/* Ajustes para las columnas */
-ion-col {
-  flex: 0 0 auto; /* Previene que las columnas se reduzcan */
-  max-width: 48%; /* Dos columnas por fila en pantallas pequeñas */
-  margin: 1%; /* Espacio entre columnas */
+/* Asegurar que las tarjetas no sean demasiado grandes */
+ion-card {
+  color: white; /* Texto blanco */
+  margin: 10px 0;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
-/* Ajustes para pantallas medianas */
-@media (min-width: 768px) {
-  ion-col {
-    max-width: 30%; /* Tres columnas por fila */
-  }
-}
-
-/* Ajustes para pantallas grandes */
-@media (min-width: 1024px) {
-  ion-col {
-    max-width: 22%; /* Más columnas por fila */
-  }
+/* Estilo para las imágenes dentro de las tarjetas */
+ion-img {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 /* Estilo para los botones flotantes */
 ion-fab-button {
-  --width: 40px;
-  --height: 40px;
-  --border-radius: 50%;
+  --background: #0e26ff; /* Color marrón */
+  --color: white; /* Color blanco para el ícono */
+  --width: 50px;
+  --height: 50px;
+  --border-radius: 50%; /* Botón redondeado */
 }
 
 /* Estilo para el ion-fab-list */
 ion-fab-list {
   align-items: flex-end;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  margin-top: 20px; /* Agrega margen superior para separar el ion-fab-list */
 }
 
 ion-fab-list ion-fab-button {
-  position: relative;
   margin-bottom: 10px;
 }
 
-ion-fab-list ion-fab-button::before {
-  content: attr(data-label);
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-right: 10px;
-  background: #ffffff;
-  color: #333;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.8em;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-  white-space: nowrap;
-}
-
-/* Botón de acción */
+/* Estilos para los botones de acción */
 ion-button {
-  font-size: 14px;
-  padding: 8px 16px;
+  --background: #5C3317; /* Fondo color marrón */
+  --color: white; /* Texto blanco */
   margin: 5px;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 50px; /* Bordes redondeados */
 }
 
 ion-button ion-icon {
-  font-size: 20px;
+  font-size: 18px;
+}
+
+/* Estilo para los botones dentro de la sección admin */
+ion-button[color="success"] {
+  margin-right: 10px;
+}
+
+/* Estilo para el título en el header */
+ion-title {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+  color: white; /* Texto blanco para buen contraste */
+  padding: 10px; /* Espaciado alrededor del título */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Estilo para el toolbar del header */
+ion-toolbar {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a tierra */
+}
+
+/* Estilo para el ion-col dentro del grid */
+ion-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para el ion-header */
+ion-header {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
 }

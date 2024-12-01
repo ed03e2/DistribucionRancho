@@ -27,4 +27,18 @@
     font-size: 14px;
     line-height: 1.5;
   }
+  ion-title {
+    background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+    color: white; /* Texto blanco para buen contraste */
+    padding: 10px; /* Espaciado alrededor del título */
+    border-radius: 8px; /* Bordes redondeados */
+  }
   
+  /* Estilo para el toolbar del header */
+  ion-toolbar {
+    background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a tierra */
+  }
+
+  ion-header {
+    background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+  }

@@ -5,3 +5,73 @@ ion-fab {
     z-index: 100; /* Asegúrate de que está en el frente */
   }
   
+  
+/* General styling for the page */
+.host {
+  display: block;
+  height: 100%;
+  --ion-background-color: #f9f9f9;
+}
+
+ion-content {
+  --padding-top: 0;
+  padding-top: 56px; /* Ajusta este valor según la altura de tu header */
+}
+
+/* Lista de tarjetas */
+.rancho-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Tarjetas individuales */
+.rancho-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+ion-title {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Marrón chocolate a Tierra */
+  color: white; /* Color del texto blanco para buen contraste */
+  padding: 10px; /* Agregar un poco de espacio alrededor del título */
+  border-radius: 8px; /* Bordes redondeados si lo deseas */
+}
+
+/* Imagen en la tarjeta */
+.rancho-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 16px;
+}
+
+/* Encabezado de la tarjeta */
+ion-card-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+ion-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+}
+
+ion-card-title:nth-of-type(2) {
+  font-size: 14px;
+  font-weight: normal;
+  color: #777777;
+}

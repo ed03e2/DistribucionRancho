@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
@@ -23,7 +23,9 @@ export class RanchosModalComponent {
     private modalController: ModalController,
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastCtrl: ToastController // Inyectamos el ToastController
+
   ) {}
 
   dismissModal() {
@@ -66,28 +68,25 @@ export class RanchosModalComponent {
     this.firestore.collection('ranchos').add(this.rancho)
       .then(() => {
         this.dismissModal(); // Cierra la modal primero
-        this.showSuccessAlert();  // Luego muestra la alerta
+        this.showSuccessToast();  // Luego muestra el toast
       })
       .catch((error: any) => {
         console.error("Error saving ranch:", error);
       });
   }
-
-  // Función para mostrar la alerta de éxito
-  async showSuccessAlert() {
-    const alert = await this.alertController.create({
-      header: 'Éxito',
+  
+  // Función para mostrar el toast de éxito
+  async showSuccessToast() {
+    const toast = await this.toastCtrl.create({
       message: 'Rancho registrado correctamente.',
-      buttons: [{
-        text: 'OK',
-        handler: () => {
-          this.dismissModal();
-        }
-      }]
+      duration: 2000, // Duración en milisegundos (2 segundos)
+      position: 'bottom', // Posición del toast ('top', 'middle', 'bottom')
+      color: 'success' // Color del toast (puedes cambiarlo a 'primary', 'warning', etc.)
     });
-
-    await alert.present();
+  
+    await toast.present();
   }
+  
 
   // Función para mostrar alerta de error
   async showErrorAlert(message: string) {

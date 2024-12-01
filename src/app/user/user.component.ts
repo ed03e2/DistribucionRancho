@@ -36,5 +36,8 @@ export class UserComponent  implements OnInit {
         this.usuarios = users;
       });
   }
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 
 }

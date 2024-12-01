@@ -38,7 +38,13 @@ export class ChatUserPage implements OnInit {
     }
   }
   
-  
+  getMessageColor(message: any): string {
+    if (message.userRole === 'admin') {
+      return 'admin-message';  // Clases CSS específicas para el admin
+    } else {
+      return 'user-message';  // Clases CSS específicas para los usuarios
+    }
+  }  
 
   goBack() {
     this.router.navigate(['/grupos']);

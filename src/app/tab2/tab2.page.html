@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>Perfil</ion-title>
   </ion-toolbar>
@@ -11,42 +11,47 @@
     </ion-toolbar>
   </ion-header>
 
+  <!-- Contenedor General -->
   <div class="profile-container">
-    <ion-card>
-      <ion-card-content>
-        <div class="profile-header">
-          <div class="avatar-container">
-            <!-- Centered profile image -->
-            <ion-avatar class="profile-avatar">
-              <img [src]="profilePicture" alt="Foto de perfil">
-            </ion-avatar>
-
-            <!-- Button to change profile picture -->
-            <ion-button fill="clear" class="avatar-button" (click)="changeProfilePicture()">
-              <ion-icon name="camera-outline"></ion-icon>
-            </ion-button>
-          </div>
-
-          <!-- Profile information -->
-          <div class="profile-info">
-            <h2 class="profile-name">{{profileName}} {{profileSecondName}}</h2>
-            <p class="profile-tel">{{profilePhone}}</p>
-            <p class="profile-email">{{profileEmail}}</p>
-          </div>
-        </div>
-        <h1>actualizar informacion</h1>
-        <ion-button (click)="openModalPassword()">
-          correo electronico
+    <!-- Foto de Perfil -->
+    <div class="profile-header">
+      <div class="avatar-container">
+        <ion-avatar class="profile-avatar">
+          <img [src]="profilePicture" alt="Foto de perfil">
+        </ion-avatar>
+        <ion-button fill="clear" class="avatar-button" (click)="changeProfilePicture()">
+          <ion-icon name="camera-outline"></ion-icon>
         </ion-button>
-        <ion-button (click)="openModalEmail()">
-          contraseña
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+      </div>
 
-    
+      <!-- Información del Perfil -->
+      <div class="profile-info">
+        <h2 class="profile-name">{{profileName}} {{profileSecondName}}</h2>
+        <p class="profile-tel">{{profilePhone}}</p>
+        <p class="profile-email">{{profileEmail}}</p>
+      </div>
+    </div>
 
-    <!-- Logout Button -->
-    <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
+    <!-- Opciones del Perfil -->
+    <div class="profile-list">
+      <!-- Opción 1 -->
+      <div class="profile-item" (click)="openModalEmail()">
+        <ion-icon name="mail-outline"></ion-icon>
+        <span>Actualizar Correo Electrónico</span>
+        <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+      </div>
+      <!-- Opción 2 -->
+      <div class="profile-item" (click)="openModalPassword()">
+        <ion-icon name="key-outline"></ion-icon>
+        <span>Restablecer Contraseña</span>
+        <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+      </div>
+      <!-- Opción 3 -->
+      <div class="profile-item" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <span>Cerrar Sesión</span>
+        <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+      </div>
+    </div>
   </div>
 </ion-content>

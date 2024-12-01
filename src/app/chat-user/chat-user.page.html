@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngFor="let message of messages" class="chat-bubble">
+  <div *ngFor="let message of messages" [ngClass]="getMessageColor(message)" class="chat-bubble">
     <!-- Si el mensaje es de admin, mostramos "Admin" antes del texto -->
     <div *ngIf="message.userRole === 'admin'" class="admin-tag">Admin</div>
     <!-- Si el mensaje es de usuario, mostramos "Usuario" antes del texto -->

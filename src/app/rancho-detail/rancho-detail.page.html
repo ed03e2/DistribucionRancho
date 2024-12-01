@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="dark" (click)="goBack()">
+      <ion-button color="white" (click)="goBack()">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,7 +12,6 @@
 <ion-content [fullscreen]="true">
   <!-- Título y descripción del rancho -->
   <h2>{{ ranchoNombre }}</h2>
-  <p>{{ ranchoDescripcion }}</p>
 
   <!-- Grid para las tarjetas -->
   <ion-grid>
@@ -49,6 +48,9 @@
     </ion-row>
   </ion-grid>
 
+  <p>{{ ranchoDescripcion }}</p>
+
+
   <!-- Botón flotante -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
@@ -60,9 +62,6 @@
       </ion-fab-button>
       <ion-fab-button *ngIf="ranchoId"  (click)=" openUserModal(ranchoId)"  color="success" data-label="users">
         <ion-icon name="person-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button>
-        <ion-icon name="add-circle-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>

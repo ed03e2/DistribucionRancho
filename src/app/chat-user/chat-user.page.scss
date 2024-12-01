@@ -1,90 +1,47 @@
-/* Estilos generales para la página */
-ion-content {
-    background-color: #F5F5F5; /* Fondo neutro claro */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    height: 100vh;
-  
-    /* Encabezado */
-    ion-header {
-      --background: linear-gradient(to right, #5C3317, #DAA520); /* Gradiente de fondo */
-      --color: #FFFFFF; /* Color blanco para el texto */
-      
-      ion-toolbar {
-        --background: transparent; /* El fondo de ion-toolbar es transparente para mostrar el gradiente */
-        --color: #FFFFFF; /* Blanco para el texto en ion-toolbar */
-  
-        ion-title {
-          text-align: center;
-          font-size: 1.6em;
-          color: #FFFFFF; /* Aseguramos que el texto sea blanco */
-        }
-      }
-    }
-  
-    /* Estilo para el texto de la página */
-    span {
-      color: #A52A2A; /* Tierra */
-      font-size: 1.2em;
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-  
-    /* Estilos para el formulario */
-    form {
-      background-color: #FFFFFF; /* Blanco */
-      border-radius: 12px;
-      padding: 20px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      
-      ion-item {
-        --background: transparent;
-        border: 1px solid #DAA520; /* Mostaza suave */
-        border-radius: 8px;
-        margin-bottom: 15px;
-  
-        ion-label {
-          color: #5C3317; /* Marrón chocolate */
-        }
-  
-        ion-input {
-          background-color: transparent;
-          color: #5C3317; /* Marrón chocolate */
-        }
-      }
-  
-      ion-button {
-        --background: #E97451; /* Siena */
-        --color: #FFFFFF; /* Blanco */
-        width: 100%;
-        font-size: 1.1em;
-        margin-top: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        
-        &:hover {
-          background-color: #B22222; /* Rojo ladrillo */
-          transition: background-color 0.3s ease;
-        }
-      }
-    }
-  
-    /* Agregar un espaciado adecuado entre los elementos */
-    ion-item, ion-button {
-      margin-bottom: 15px;
-    }
-  
-    /* Texto de error */
-    .error_message {
-      color: #B22222; /* Rojo ladrillo */
-      font-size: 0.9em;
-      text-align: center;
-    }
-  }
-  
+/* Estilos para los mensajes del admin */
+.admin-message {
+  background-color: #007bff;  /* Color azul para los admins */
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+  max-width: 80%;
+  margin-left: 20px;
+}
+
+/* Estilos para los mensajes del usuario */
+.user-message {
+  background-color: #e0e0e0;  /* Color gris claro para los usuarios */
+  color: black;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: right;
+  max-width: 80%;
+  margin-right: 20px;
+}
+
+/* Estilos comunes para las burbujas de chat */
+.chat-bubble {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Estilo para el título en el header */
+ion-title {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+  color: white; /* Texto blanco para buen contraste */
+  padding: 10px; /* Espaciado alrededor del título */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Estilo para el toolbar del header */
+ion-toolbar {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+}
+
+/* Estilo para el header */
+ion-header {
+  background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a Tierra */
+}
