@@ -1,3 +1,10 @@
-<p>
-  update-email works!
-</p>
+
+<ion-item>
+  <h1>Actualizar correo</h1>
+  <ion-label position="stacked">Nuevo correo electrónico</ion-label>
+  <ion-input type="email" [(ngModel)]="newEmail" required></ion-input>
+  <ion-button expand="full" color="primary" (click)="updateEmail()">Actualizar</ion-button>
+</ion-item>
+
+<ion-text color="danger" *ngIf="errorMessage">{{ errorMessage }}</ion-text>
+<ion-text color="success" *ngIf="successMessage">{{ successMessage }}</ion-text>

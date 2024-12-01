@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { EmailAuthProvider, reauthenticateWithCredential, updateEmail, updatePassword } from 'firebase/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat';
+import { BehaviorSubject } from 'rxjs';
 export interface User{
   role: string | PromiseLike<string>;
   username: string;
@@ -13,11 +15,18 @@ export interface User{
 export class AuthService {
   private user!:User;
   recaptchaVerifier: any;
+  currentUser:any;
+  private userSubject = new BehaviorSubject<firebase.User | null>(null);
+  user$ = this.userSubject.asObservable(); // Exponer el observable
 
   constructor(
     public auth: AngularFireAuth,
     private firestore:AngularFirestore
-  ) { }
+  ) { 
+    this.auth.onAuthStateChanged((user) => {
+      this.userSubject.next(user); // Actualizar el sujeto con el usuario actual
+    });
+  }
   
   loginFireauth(value: any){
     return new Promise<any> ((resolve, reject)=>{
@@ -54,25 +63,36 @@ export class AuthService {
     });
   }
 //Usuario registrado
-  userRegistration(value:any){
-    return new Promise<any> ((resolve, reject)=>{
-      this.auth.createUserWithEmailAndPassword(value.email, value.password).then(
-       (res: any) => {
-        const userId = res.user.uid;
-        this.firestore.collection('users').doc(userId).set({
-          name: value.name,
-          secondName: value.secondName,
-          email: value.email,
-          phone: value.phone, // Guardamos el número de teléfono
-          role: 'user'
-        }).then(()=> {
-          resolve(res)
-        }).catch(error => reject(error));
-       },
-        (error: any) => reject(error)
-      );
+async userRegistration(value: any): Promise<firebase.auth.UserCredential> {
+  try {
+    const res = await this.auth.createUserWithEmailAndPassword(value.email, value.password);
+    const user = res.user;
+
+    if (!user) {
+      throw new Error('No se pudo registrar al usuario.');
+    }
+
+    // Actualizar el nombre en el perfil de Firebase Authentication
+    await user.updateProfile({
+      displayName: `${value.name} ${value.secondName}`,
     });
+
+    // Guardar datos adicionales en Firestore
+    await this.firestore.collection('users').doc(user.uid).set({
+      name: value.name,
+      secondName: value.secondName,
+      email: value.email,
+      phone: value.phone,
+      role: 'user',
+    });
+
+    console.log('Usuario registrado con éxito.');
+    return res; // Devuelve el objeto UserCredential
+  } catch (error) {
+    console.error('Error en el registro de usuario:', error);
+    throw error;
   }
+}
 //Olvidaste la contraseña funcion
   resetPassword(email: string){
     return new Promise<void> ((resolve, reject)=>{
@@ -90,23 +110,42 @@ loginPhoneauth(phoneNumber: string, appVerifier: firebase.auth.RecaptchaVerifier
 }
 
 //Actualizar el correo electronico 
-updateEmail(newEmail:string):Promise<void>{
-  return new Promise<void>((resolve, reject) =>{
+updateEmail(newEmail: string): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     const user = this.auth.currentUser;
-    if(user) {
-      user.then(currentUser =>{
-        currentUser?.updateEmail(newEmail).then(()=>{
-          this.firestore.collection('users').doc(currentUser.uid).update({
-            email:newEmail
-          });
-          resolve();
-        })
-        .catch(error => reject(error));
+    if (user) {
+      user.then(currentUser => {
+        currentUser?.updateEmail(newEmail)
+          .then(() => {
+            // Actualizar el correo en Firestore
+            this.firestore.collection('users').doc(currentUser.uid).update({
+              email: newEmail
+            });
+            resolve();
+          })
+          .catch(error => reject(error));
       });
-    }else{
-      reject('no hay usuario autenticado ')
+    } else {
+      reject('No hay usuario autenticado');
     }
-  })
+  });
+}
+async getCurrentUsers() {
+  const user = await this.auth.currentUser;
+  if (!user) throw new Error('No hay un usuario autenticado.');
+  return user;
+}
+async verifyAndUpdateEmail(newEmail: string): Promise<void> {
+  const user = await this.getCurrentUsers();
+  if (!user) throw new Error('No hay un usuario autenticado.');
+
+  try {
+    // Envía un correo de verificación al nuevo email antes de actualizar
+    await user.verifyBeforeUpdateEmail(newEmail);
+    console.log('Correo de verificación enviado al nuevo email.');
+  } catch (error) {
+    throw new Error('Error al verificar y actualizar el correo: ' + error!);
+  }
 }
 //Actualizar la contraseña 
 updatePassword(newPassword: string): Promise<void> {
@@ -123,6 +162,7 @@ updatePassword(newPassword: string): Promise<void> {
 }
 async getCurrentUser(){
   const user = await this.auth.currentUser;
+  console.log('Usuario actual:', user); // Muestra el usuario actual
   if (user) {
     return {
       uid: user.uid,
@@ -134,6 +174,21 @@ async getCurrentUser(){
   }
 }
 //Autenticar nuevamente 
+async reauthenticateUser(currentPassword: string): Promise<void> {
+  const user = await this.auth.currentUser;
+  if (!user || !user.email) {
+    throw new Error('No se encontró un usuario autenticado.');
+  }
+
+  const credential = EmailAuthProvider.credential(user.email, currentPassword);
+  try {
+    await reauthenticateWithCredential(user, credential);
+    console.log('Usuario reautenticado correctamente.');
+  } catch (error) {
+    console.error('Error al reautenticar al usuario:', error);
+    throw error;
+  }
+}
 getUser() {
   return this.auth.currentUser;  // Obtiene el usuario actual
 }

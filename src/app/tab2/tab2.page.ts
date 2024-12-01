@@ -45,8 +45,6 @@ export class Tab2Page {
           }else{
             console.log("PROFILE", profile);
             this.profileName = "no disponible ";
-            this.profileSecondName = 'no disponible'
-            this.profilePhone = "no disponible";
             this.profileEmail = "no disponible";
           }
         })
@@ -64,15 +62,25 @@ export class Tab2Page {
     
 
   }
-    async openModalEmail() {
-      const modal = await this.modalCTRL.create({
-        component: UpdateEmailComponent,
-      });
-  
-      modal.onDidDismiss()
-  
-      return await modal.present();
-    }
+  async openModalEmail() {
+    const modal = await this.modalCTRL.create({
+      component: UpdateEmailComponent,
+    });
+
+    modal.onDidDismiss().then(async (data) => {
+      if (data.data) {
+        // Actualizar correo con el valor que se pasó desde el modal
+        try {
+          await this.authservice.updateEmail(data.data.newEmail);
+          await this.presentToast('Correo actualizado con éxito');
+        } catch (error) {
+          await this.presenterrorToast('Error al actualizar el correo');
+        }
+      }
+    });
+
+    return await modal.present();
+  }
     async openModalPassword() {
       const modal = await this.modalCTRL.create({
         component: UpdatePasswordComponent,
@@ -81,6 +89,24 @@ export class Tab2Page {
       modal.onDidDismiss()
   
       return await modal.present();
+    }
+
+    async presentToast(message: string) {
+      const toast = await this.toastController.create({
+        message: message,
+        duration: 2000,
+        color: 'success'
+      });
+      toast.present();
+    }
+  
+    async presenterrorToast(message: string) {
+      const toast = await this.toastController.create({
+        message: message,
+        duration: 2000,
+        color: 'danger'
+      });
+      toast.present();
     }
 
   

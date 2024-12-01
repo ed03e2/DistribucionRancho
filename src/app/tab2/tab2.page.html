@@ -16,19 +16,14 @@
     <!-- Foto de Perfil -->
     <div class="profile-header">
       <div class="avatar-container">
-        <ion-avatar class="profile-avatar">
-          <img [src]="profilePicture" alt="Foto de perfil">
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
-        <ion-button fill="clear" class="avatar-button" (click)="changeProfilePicture()">
-          <ion-icon name="camera-outline"></ion-icon>
-        </ion-button>
       </div>
 
       <!-- Información del Perfil -->
       <div class="profile-info">
         <h2 class="profile-name">{{profileName}} {{profileSecondName}}</h2>
-        <p class="profile-tel">{{profilePhone}}</p>
-        <p class="profile-email">{{profileEmail}}</p>
       </div>
     </div>
 
