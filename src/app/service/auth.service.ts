@@ -184,8 +184,10 @@ async reauthenticateUser(currentPassword: string): Promise<void> {
   try {
     await reauthenticateWithCredential(user, credential);
     console.log('Usuario reautenticado correctamente.');
-  } catch (error) {
-    console.error('Error al reautenticar al usuario:', error);
+  }catch (error) {
+    if (error instanceof Error) {
+      console.error('Error al reautenticar al usuario:', error.message);
+    }
     throw error;
   }
 }
