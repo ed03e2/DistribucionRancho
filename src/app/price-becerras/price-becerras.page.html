@@ -1,8 +1,8 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="--background: linear-gradient(to bottom, #5C3317, #A52A2A);">
     <ion-title>Precio Becerras</ion-title>
     <ion-buttons slot="start">
-      <ion-button color="dark" (click)="goBack()">
+      <ion-button color="light" (click)="goBack()">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,33 +15,50 @@
   <p>*Becerros corrientes a criterio se reciben.</p>
   <p>*Becerros con algún defecto que no sea grave se paga precio de consumo nacional o 20 pesos menos de la lista.</p>
 
-  <!-- Tabla de becerras -->
   <ion-grid class="styled-table">
-    <!-- Encabezados de la tabla -->
     <ion-row>
       <ion-col><strong>Peso en Kg</strong></ion-col>
       <ion-col><strong>Precio</strong></ion-col>
       <ion-col><strong>#2</strong></ion-col>
       <ion-col><strong>CN</strong></ion-col>
-      <ion-col><strong>Acciones</strong></ion-col>
+      <ion-col *ngIf="isAdmin"><strong>Acciones</strong></ion-col>
     </ion-row>
 
     <!-- Filas dinámicas -->
     <ion-row *ngFor="let item of data; let i = index; trackBy: trackByIndex">
       <ion-col>
-        <ion-input [(ngModel)]="item.peso" placeholder="Peso" (ngModelChange)="saveRow(i)"></ion-input>
+        <ion-input 
+          [(ngModel)]="item.peso" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribe el Peso" 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="item.precio" placeholder="Precio" (ngModelChange)="saveRow(i)"></ion-input>
+        <ion-input 
+          [(ngModel)]="item.precio" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribe el Precio" 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="item.numero2" placeholder="Número 2" (ngModelChange)="saveRow(i)"></ion-input>
+        <ion-input 
+          [(ngModel)]="item.numero2" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribir..." 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
       <ion-col>
-        <ion-input [(ngModel)]="item.cn" placeholder="CN" (ngModelChange)="saveRow(i)"></ion-input>
+        <ion-input 
+          [(ngModel)]="item.cn" 
+          (ngModelChange)="isAdmin ? saveRow(i) : null" 
+          placeholder="Escribir..." 
+          [readonly]="!isAdmin">
+        </ion-input>
       </ion-col>
-
-      <ion-col>
+      <ion-col *ngIf="isAdmin">
         <ion-button color="danger" (click)="removeRow(i)">
           <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
         </ion-button>
@@ -49,8 +66,12 @@
     </ion-row>
   </ion-grid>
 
-  <!-- Botón para agregar nuevas filas -->
-  <ion-button class="add-row-btn" expand="block" (click)="addRow()">
+  <!-- Botón para agregar fila (solo visible para admin) -->
+  <ion-button 
+    *ngIf="isAdmin" 
+    class="add-row-btn" 
+    expand="block" 
+    (click)="addRow()">
     <ion-icon slot="icon-only" name="add-outline"></ion-icon>
   </ion-button>
 </ion-content>

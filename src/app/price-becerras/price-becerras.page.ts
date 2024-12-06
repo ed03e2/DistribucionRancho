@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthService } from '../service/auth.service'; // Asegúrate de que este servicio exista
 
 @Component({
   selector: 'app-price-becerras',
@@ -9,8 +10,13 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class PriceBecerrasPage implements OnInit {
   data: { id?: string; peso: string; precio: string; numero2: string; cn: string }[] = []; // Array de datos
+  isAdmin: boolean = false; // Propiedad para controlar permisos
 
-  constructor(private router: Router, private firestore: AngularFirestore) {}
+  constructor(
+    private router: Router,
+    private firestore: AngularFirestore,
+    private authService: AuthService // Servicio de autenticación
+  ) {}
 
   ngOnInit() {
     // Recuperar los datos de Firebase al cargar la página
@@ -21,10 +27,27 @@ export class PriceBecerrasPage implements OnInit {
         this.data = data;
         console.log('Datos cargados de Firebase:', this.data);
       });
+
+    // Obtener el rol del usuario
+    const uid = this.authService.getUserUid();
+    this.authService.getUserRole(uid).then(
+      (role) => {
+        this.isAdmin = role === 'admin'; // Cambiar según el rol requerido
+        console.log('¿Es administrador?', this.isAdmin);
+      },
+      (error) => {
+        console.error('Error al obtener el rol:', error);
+      }
+    );
   }
 
   // Método para agregar una nueva fila
   addRow() {
+    if (!this.isAdmin) {
+      console.warn('No tienes permisos para agregar filas.');
+      return;
+    }
+
     const nuevaFila = { peso: '', precio: '', numero2: '', cn: '' };
     this.firestore
       .collection('becerras') // Reemplaza 'becerras' con tu colección
@@ -39,6 +62,11 @@ export class PriceBecerrasPage implements OnInit {
 
   // Método para eliminar una fila
   removeRow(index: number) {
+    if (!this.isAdmin) {
+      console.warn('No tienes permisos para eliminar filas.');
+      return;
+    }
+
     const id = this.data[index].id; // ID del documento en Firebase
     if (id) {
       this.firestore
@@ -56,6 +84,11 @@ export class PriceBecerrasPage implements OnInit {
 
   // Método para guardar cambios en una fila
   saveRow(index: number) {
+    if (!this.isAdmin) {
+      console.warn('No tienes permisos para guardar cambios.');
+      return;
+    }
+
     const id = this.data[index].id; // ID del documento en Firebase
     const updatedData = {
       peso: this.data[index].peso,

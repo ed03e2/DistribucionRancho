@@ -1,21 +1,27 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="--background: linear-gradient(to bottom, #5C3317, #A52A2A);">
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()"></ion-back-button>
+      <ion-back-button color="light" (click)="goBack()"></ion-back-button>
     </ion-buttons>
     <ion-title>Chat Admin</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngFor="let message of messages" [ngClass]="getMessageColor(message)" class="chat-bubble">
-    <div class="chat-bubble" *ngIf="message.userRole === 'admin'">Admin</div>
-    <p>{{ message.text }}</p>
-    <small>{{ message.timestamp.toDate() | date: 'short' }}</small>
+  <div class="chat-container" #chatContainer>
+    <div *ngFor="let message of messages" [ngClass]="getMessageColor(message)" class="chat-bubble">
+      <div class="message-header">
+        <strong>{{profileName}}</strong>
+        <br>
+        <small>{{ message.timestamp.toDate() | date: 'short' }}</small>
+      </div>
+      <p>{{ message.text }}</p>
+    </div>
   </div>
-
-  <ion-item>
-    <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje"></ion-input>
-  </ion-item>
-  <ion-button (click)="sendMessage()">Enviar</ion-button>
+  <div class="chat-input-container">
+    <ion-item>
+      <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje"></ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="sendMessage()">Enviar</ion-button>
+  </div>
 </ion-content>

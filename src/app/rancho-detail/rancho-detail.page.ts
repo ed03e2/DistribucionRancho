@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../service/auth.service'; // Asegúrate de importar tu servicio de autenticación
 import { EditRanchoModalComponent } from '../edit-rancho-modal/edit-rancho-modal.component';
 import { UserComponent } from '../user/user.component';
+
 @Component({
   selector: 'app-rancho-detail',
   templateUrl: './rancho-detail.page.html',
@@ -13,9 +14,9 @@ import { UserComponent } from '../user/user.component';
 export class RanchoDetailPage implements OnInit {
   ranchoNombre: string | undefined;
   ranchoDescripcion: string | undefined;
-  ranchoPsg: string | undefined; 
+  ranchoPsg: string | undefined;
   ranchoId: string | undefined;
-  codigoVerificacion: string | undefined // Campo para el código de verificación
+  codigoVerificacion: string | undefined; // Campo para el código de verificación
   isAdmin: boolean = false; // Variable para verificar si el usuario es administrador
 
   constructor(
@@ -24,20 +25,32 @@ export class RanchoDetailPage implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
     private firestore: AngularFirestore,
-    private authService: AuthService // Servicio para roles
+    private authService: AuthService, // Servicio para roles
+    private toastController: ToastController // Servicio para mostrar toasts
   ) {}
 
   ngOnInit() {
     this.loadUserRole(); // Cargar el rol del usuario
 
     // Obtener parámetros de la ruta
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.ranchoNombre = params['nombre'];
       this.ranchoDescripcion = params['descripcion'];
       this.ranchoPsg = params['psg'];
       this.ranchoId = params['id'];
       this.loadRanchoId();
     });
+  }
+
+  // Función para mostrar un toast
+  async presentToast(message: string, color: string = 'success') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'bottom',
+    });
+    toast.present();
   }
 
   // Cargar el rol del usuario
@@ -53,9 +66,10 @@ export class RanchoDetailPage implements OnInit {
   }
 
   async loadRanchoId() {
-    const snapshot = await this.firestore.collection('ranchos', ref =>
-      ref.where('nombre', '==', this.ranchoNombre)
-    ).get().toPromise();
+    const snapshot = await this.firestore
+      .collection('ranchos', (ref) => ref.where('nombre', '==', this.ranchoNombre))
+      .get()
+      .toPromise();
 
     if (snapshot && !snapshot.empty) {
       const ranchoData = snapshot.docs[0].data() as any; // Asegúrate de que el campo exista
@@ -63,48 +77,9 @@ export class RanchoDetailPage implements OnInit {
       this.codigoVerificacion = ranchoData.codigoVerificacion; // Cargar el código de verificación desde la base de datos
       console.log('Código de verificación cargado:', this.codigoVerificacion);
     } else {
-      console.error("Rancho no encontrado");
+      console.error('Rancho no encontrado');
     }
   }
-  async addUserToRancho(codigoVerificacion: string) {
-    const snapshot = await this.firestore.collection('ranchos', ref =>
-      ref.where('codigoVerificacion', '==', codigoVerificacion)
-    ).get().toPromise();
-
-    if (snapshot && !snapshot.empty) {
-      // Encontramos el rancho con el código de verificación
-      const ranchoDoc = snapshot.docs[0];
-      const ranchoId = ranchoDoc.id;
-
-      // Obtener datos del usuario (puedes obtener estos datos de tu sistema de autenticación)
-      const user = await this.authService.getCurrentUser();  // Método ficticio
-      const userData = {
-        userId: user.uid,
-        userName: user.displayName,
-        userEmail: user.email
-      };
-
-      // Crear la subcolección "usuarios" dentro del rancho
-      await this.firestore.collection('ranchos').doc(ranchoId).collection('usuarios').add(userData);
-
-      console.log("Usuario agregado al rancho");
-    } else {
-      console.error("Código de verificación no válido");
-    }
-  }
-
-  // Método para abrir el modal de usuarios
-  async openUserModal(ranchoId: string) {
-    console.log("hola", ranchoId);
-      const modal = await this.modalController.create({
-        component: UserComponent,
-        componentProps: { ranchoId }
-
-        
-      });
-  
-      await modal.present();
-    }
 
   async deleteRancho() {
     const alert = await this.alertController.create({
@@ -113,20 +88,21 @@ export class RanchoDetailPage implements OnInit {
       buttons: [
         {
           text: 'Cancelar',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'Eliminar',
           handler: async () => {
             if (this.ranchoId) {
               await this.firestore.collection('ranchos').doc(this.ranchoId).delete();
+              this.presentToast('Rancho eliminado con éxito', 'danger');
               this.router.navigate(['/tabs/tab1']);
             } else {
-              console.error("Rancho no encontrado para eliminar");
+              console.error('Rancho no encontrado para eliminar');
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
@@ -139,10 +115,10 @@ export class RanchoDetailPage implements OnInit {
         rancho: {
           nombre: this.ranchoNombre,
           descripcion: this.ranchoDescripcion,
-          psg: this.ranchoPsg
+          psg: this.ranchoPsg,
         },
-        ranchoId: this.ranchoId
-      }
+        ranchoId: this.ranchoId,
+      },
     });
 
     modal.onDidDismiss().then((data) => {
@@ -151,7 +127,19 @@ export class RanchoDetailPage implements OnInit {
         this.ranchoNombre = updatedRancho.nombre;
         this.ranchoDescripcion = updatedRancho.descripcion;
         this.ranchoPsg = updatedRancho.psg;
+
+        // Mostrar el toast de éxito
+        this.presentToast('Rancho editado con éxito');
       }
+    });
+
+    await modal.present();
+  }
+
+  async openUserModal(ranchoId: string) {
+    const modal = await this.modalController.create({
+      component: UserComponent,
+      componentProps: { ranchoId },
     });
 
     await modal.present();
@@ -164,16 +152,16 @@ export class RanchoDetailPage implements OnInit {
   openGroups() {
     this.router.navigate(['/grupos']);
   }
-  
+
   openUser() {
     this.router.navigate(['/users']);
   }
-  
-  async goToPriceBecerros(){
-    this.router.navigate(['/price-becerros']),{}
+
+  async goToPriceBecerros() {
+    this.router.navigate(['/price-becerros']);
   }
-  
-  async goToPriceBecerras(){
-    this.router.navigate(['/price-becerras']),{}
+
+  async goToPriceBecerras() {
+    this.router.navigate(['/price-becerras']);
   }
 }

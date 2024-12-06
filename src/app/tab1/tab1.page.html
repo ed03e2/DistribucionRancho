@@ -1,11 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Rancho Details</ion-title>
+  <ion-toolbar style="--background: linear-gradient(to bottom, #5C3317, #A52A2A);">
+    <ion-title>Ranchos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="custom-background">
-  <h1>Bienvenido, {{ userName }} </h1>
+<ion-content class="custom-background">
+  <!-- Encabezado personalizado dentro del contenido -->
+  <h1>Bienvenido, {{ userName }}</h1>
+
   <div *ngIf="isAdmin">
     <ion-fab slot="fixed" vertical="bottom" horizontal="end">
       <ion-fab-button (click)="openModal()">
@@ -15,8 +17,16 @@
   </div>
 
   <div class="rancho-list">
-    <ion-card *ngFor="let rancho of ranchos" class="rancho-card" (click)="goToRanchoDetail(rancho.nombre, rancho.descripcion, rancho.psg)">
-      <img [src]="rancho.imagenUrl" alt="{{ rancho.nombre }}" class="rancho-image" />
+    <ion-card
+      *ngFor="let rancho of ranchos"
+      class="rancho-card"
+      (click)="goToRanchoDetail(rancho.nombre, rancho.descripcion, rancho.psg)"
+    >
+      <img
+        [src]="rancho.imagenUrl"
+        alt="{{ rancho.nombre }}"
+        class="rancho-image"
+      />
       <ion-card-header>
         <ion-card-title>{{ rancho.nombre }}</ion-card-title>
         <ion-card-title>{{ rancho.psg }}</ion-card-title>

@@ -1,16 +1,10 @@
 /* Establece el color de fondo general para el contenido */
-body, ion-content {
+ion-content {
   background: linear-gradient(to bottom, #5C3317, #A52A2A); /* Gradiente marrón chocolate a tierra */
+  --padding-top: 10px; /* Ajusta el valor según la altura del header */
+
 }
 
-/* Estilo para el título principal */
-h2 {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: white; /* Color blanco para contraste */
-  margin-top: 20px;
-}
 
 /* Estilo para la descripción */
 p {
@@ -51,24 +45,12 @@ ion-fab-button {
 }
 
 /* Estilo para el ion-fab-list */
-ion-fab-list {
-  align-items: flex-end;
-  margin-bottom: 20px;
-  margin-top: 20px; /* Agrega margen superior para separar el ion-fab-list */
-}
 
-ion-fab-list ion-fab-button {
-  margin-bottom: 10px;
-}
 
 /* Estilos para los botones de acción */
 ion-button {
-  --background: #5C3317; /* Fondo color marrón */
-  --color: white; /* Texto blanco */
-  margin: 5px;
-  font-size: 14px;
-  padding: 10px 20px;
-  border-radius: 50px; /* Bordes redondeados */
+  --background: transparent; /* Botones con fondo transparente */
+  --color: white; /* Texto blanco para los íconos */
 }
 
 ion-button ion-icon {
@@ -86,6 +68,7 @@ ion-title {
   color: white; /* Texto blanco para buen contraste */
   padding: 10px; /* Espaciado alrededor del título */
   border-radius: 8px; /* Bordes redondeados */
+  text-align: center;
 }
 
 /* Estilo para el toolbar del header */

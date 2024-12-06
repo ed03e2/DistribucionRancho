@@ -35,7 +35,7 @@ email: string='';
     toast.present();
   }
 
-  goBack() {
+  navigate() {
     this.router.navigate(['/login']);
   }
 }
