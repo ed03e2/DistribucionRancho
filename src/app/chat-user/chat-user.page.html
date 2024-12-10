@@ -10,12 +10,14 @@
 <ion-content>
   <div class="chat-container" #chatContainer>
     <div *ngFor="let message of messages" [ngClass]="getMessageColor(message)" class="chat-bubble">
-      <div class="message-header">
-        <strong>{{profileName}}</strong>
-        <br>
-        <small>{{ message.timestamp.toDate() | date: 'short' }}</small>
-      </div>
+        <!-- Si el mensaje es de admin, mostramos "Admin" antes del texto -->
+        <div *ngIf="message.userRole === 'admin'" class="admin-tag">Admin</div>
+        <!-- Si el mensaje es de usuario, mostramos "Usuario" antes del texto -->
+        <div *ngIf="message.userRole === 'user'" class="user-tag">Usuario</div>
+    
+    
       <p>{{ message.text }}</p>
+      <small>{{ message.timestamp.toDate() | date: 'short' }}</small>
     </div>
   </div>
   <div class="chat-input-container">

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "715942525063",
+    "project_id": "login-fa6e0",
+    "storage_bucket": "login-fa6e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715942525063:android:f4aeee68e3479d24c6a022",
+        "android_client_info": {
+          "package_name": "com.ranchos.distribucion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715942525063-ljsdfa9n05au11scvckog3v706b2b3j4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ranchos.distribucion",
+            "certificate_hash": "c44a410e7b9769d4893df8521595282d865a0911"
+          }
+        },
+        {
+          "client_id": "715942525063-bki6f3o8ottal01kojpkfnv287n29hhn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDTOSiSUmDPty8GVuhNRI8bO-NxOGgK6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715942525063-bki6f3o8ottal01kojpkfnv287n29hhn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../service/auth.service'; // Asegúrate de importar tu servicio de autenticación
 import { EditRanchoModalComponent } from '../edit-rancho-modal/edit-rancho-modal.component';
 import { UserComponent } from '../user/user.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-rancho-detail',
@@ -155,6 +156,16 @@ export class RanchoDetailPage implements OnInit {
 
   openUser() {
     this.router.navigate(['/users']);
+  }
+
+  async openCalendar() {
+    const modal = await this.modalController.create({
+      component: CalendarComponent,
+    });
+
+  
+
+    return await modal.present();
   }
 
   async goToPriceBecerros() {

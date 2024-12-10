@@ -17,8 +17,9 @@ import { EditRanchoModalComponent } from './edit-rancho-modal/edit-rancho-modal.
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { UpdateEmailComponent } from './update-email/update-email.component';
 import { UserComponent } from './user/user.component';
+import { CalendarComponent } from './calendar/calendar.component';
 @NgModule({
-  declarations: [AppComponent,UserComponent, RanchosModalComponent, ProductsModalComponent, EditRanchoModalComponent, UpdateEmailComponent, UpdatePasswordComponent],
+  declarations: [AppComponent,UserComponent, CalendarComponent,RanchosModalComponent, ProductsModalComponent, EditRanchoModalComponent, UpdateEmailComponent, UpdatePasswordComponent],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 

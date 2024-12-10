@@ -10,12 +10,10 @@
 <ion-content>
   <div class="chat-container" #chatContainer>
     <div *ngFor="let message of messages" [ngClass]="getMessageColor(message)" class="chat-bubble">
-      <div class="message-header">
-        <strong>{{profileName}}</strong>
-        <br>
-        <small>{{ message.timestamp.toDate() | date: 'short' }}</small>
-      </div>
+      <div class="chat-bubble" *ngIf="message.userRole === 'admin'">Admin</div>
+
       <p>{{ message.text }}</p>
+      <small>{{ message.timestamp.toDate() | date: 'short' }}</small>
     </div>
   </div>
   <div class="chat-input-container">
